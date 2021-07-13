@@ -94,10 +94,6 @@ jobs:
           name: setup-environment-vars
           command: /build-tools-ci/scripts/set-environment
 
-      - run:
-          name: run static tests
-          command: ./.ci/test/static/run
-
       - save_cache:
           key: composer-cache-{{ checksum "composer.lock" }}
           paths:
@@ -255,11 +251,9 @@ workflows:
   build_deploy_and_test:
     jobs:
       - configure_env_vars
-      - static_tests
       - build_php
       - deploy_to_pantheon:
           requires:
-            - static_tests
             - build_php
       - visual_regression_test:
           requires:
