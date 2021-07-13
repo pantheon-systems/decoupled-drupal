@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+id: test
+label: Test
+description: ''
+folder: ../config/envs/test
+module:
+theme: {  }
+blacklist:
+graylist: {  }
+graylist_dependents: true
+graylist_skip_equal: true
+weight: 0
