@@ -1,0 +1,18 @@
+langcode: en
+status: false
+dependencies: {  }
+id: local
+label: Local
+description: ''
+folder: ../config/envs/local
+module:
+  devel: 0
+  views_ui: 0
+theme: {  }
+blacklist:
+  - devel.toolbar.settings
+graylist:
+  - system.performance
+graylist_dependents: true
+graylist_skip_equal: true
+weight: 0

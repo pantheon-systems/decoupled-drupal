@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies: {  }
+id: live
+label: Live
+description: ''
+folder: ../config/envs/live
+module:
+theme: {  }
+blacklist:
+graylist:
+  - environment_indicator.settings
+graylist_dependents: true
+graylist_skip_equal: true
+weight: 0
