@@ -11,14 +11,15 @@
     ],
     "require": {
         "php": ">=7.3",
-        "composer/installers": "^1.9",
-        "drupal/core-composer-scaffold": "^8.8.1",
-        "drupal/core-recommended": "^8.8",
-        "pantheon-systems/drupal-integrations": "^8",
+        "composer/installers": "^1.8",
+        "cweagans/composer-patches": "^1.0",
+        "drupal/core-composer-scaffold": "^9",
+        "drupal/core-recommended": "^8.8 || ^9",
+        "drush-ops/behat-drush-endpoint": "^9.3",
+        "drush/drush": "^10.5",
+        "pantheon-systems/drupal-integrations": "^8 || ^9",
         "pantheon-systems/quicksilver-pushback": "^2",
-        "drush/drush": "^8.4.5",
-        "cweagans/composer-patches": "^1.7",
-        "drush-ops/behat-drush-endpoint": "^9.3"
+        "zaporylie/composer-drupal-optimizations": "^1.2"
     },
     "require-dev": {
         "behat/behat": "^3.1",
@@ -82,7 +83,7 @@
         },
         "build-env": {
             "install-cms": [
-                "drush site-install standard --account-mail={account-mail} --account-name={account-name} --account-pass={account-pass} --site-mail={site-mail} --site-name={site-name} --yes"
+                "drush site-install umami --account-mail={account-mail} --account-name={account-name} --account-pass={account-pass} --site-mail={site-mail} --site-name={site-name} --yes"
             ],
             "export-configuration": "drush config-export --yes"
         },
