@@ -20,17 +20,13 @@ $pantheon_env = $is_pantheon_env ? $_ENV['PANTHEON_ENVIRONMENT'] : NULL;
 $is_pantheon_dev_env = $pantheon_env == 'dev';
 $is_pantheon_stage_env = $pantheon_env == 'test';
 $is_pantheon_prod_env = $pantheon_env == 'live';
+$is_local_env = $pantheon_env == 'lando';
 
 /**
  * CI envs.
  */
 $is_circle_env = isset($_ENV['CIRCLECI']);
-$is_ci_env = $is_circle_env;
-
-/**
- * Local env.
- */
-$is_local_env = !$is_pantheon_env && !$is_ci_env;
+$is_ci_env = $is_circle_env || isset($_ENV['CI']);;
 
 
 /**
@@ -107,6 +103,7 @@ if ($split != 'none') {
  */
 $config['environment_indicator_overwrite'] = TRUE;
 $config['environment_indicator.indicator']['fg_color'] = '#ffffff';
+
 
 if ($is_local_env) {
   $config['environment_indicator.indicator']['name'] = 'Local';
