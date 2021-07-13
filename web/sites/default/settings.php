@@ -32,3 +32,11 @@ $local_settings = __DIR__ . "/settings.local.php";
 if (file_exists($local_settings)) {
   include $local_settings;
 }
+
+/**
+ * If there is a demo settings file, then include it
+ */
+$demo_settings = __DIR__ . "/demo.settings.php";
+if (file_exists($demo_settings)) {
+  include $demo_settings;
+}
