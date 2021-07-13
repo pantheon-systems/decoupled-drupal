@@ -22,6 +22,12 @@ $is_pantheon_stage_env = $pantheon_env == 'test';
 $is_pantheon_prod_env = $pantheon_env == 'live';
 
 /**
+ * CI envs.
+ */
+$is_circle_env = isset($_ENV['CIRCLECI']);
+$is_ci_env = $is_circle_env;
+
+/**
  * Local env.
  */
 $is_local_env = !$is_pantheon_env && !$is_ci_env;
@@ -94,6 +100,30 @@ if ($split != 'none') {
  /**
  * Redis settings.
  */
+
+
+/**
+ * Environment Indicator settings.
+ */
+$config['environment_indicator_overwrite'] = TRUE;
+$config['environment_indicator.indicator']['fg_color'] = '#ffffff';
+
+if ($is_local_env) {
+  $config['environment_indicator.indicator']['name'] = 'Local';
+  $config['environment_indicator.indicator']['bg_color'] = '#3363aa';
+}
+
+if ($is_pantheon_dev_env){
+  $config['environment_indicator.indicator']['bg_color'] = '#33aa3c';
+}
+
+if($is_pantheon_stage_env) {
+  $config['environment_indicator.indicator']['bg_color'] = '#ffBB00';
+}
+
+if ($is_pantheon_prod_env) {
+  $config['environment_indicator.indicator']['bg_color'] = '#aa3333';
+}
 
 
 

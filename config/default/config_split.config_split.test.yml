@@ -1,3 +1,4 @@
+uuid: 1bafda8f-fc73-4e93-842c-072b5ba59ba3
 langcode: en
 status: true
 dependencies: {  }
@@ -5,9 +6,9 @@ id: test
 label: Test
 description: ''
 folder: ../config/envs/test
-module:
+module: null
 theme: {  }
-blacklist:
+blacklist: null
 graylist: {  }
 graylist_dependents: true
 graylist_skip_equal: true

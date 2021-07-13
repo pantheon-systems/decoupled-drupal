@@ -1,3 +1,4 @@
+uuid: 6e3cb888-235d-422e-9419-e3640e7d7542
 langcode: en
 status: true
 dependencies: {  }
@@ -5,9 +6,9 @@ id: dev
 label: Dev
 description: ''
 folder: ../config/envs/dev
-module:
+module: null
 theme: {  }
-blacklist:
+blacklist: null
 graylist: {  }
 graylist_dependents: true
 graylist_skip_equal: true

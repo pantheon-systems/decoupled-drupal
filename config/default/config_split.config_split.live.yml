@@ -1,3 +1,4 @@
+uuid: 721620a4-0491-458c-9a91-94235960fbb4
 langcode: en
 status: true
 dependencies: {  }
@@ -5,9 +6,9 @@ id: live
 label: Live
 description: ''
 folder: ../config/envs/live
-module:
+module: null
 theme: {  }
-blacklist:
+blacklist: null
 graylist:
   - environment_indicator.settings
 graylist_dependents: true
