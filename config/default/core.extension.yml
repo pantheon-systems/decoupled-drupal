@@ -45,6 +45,7 @@ module:
   path_alias: 0
   quickedit: 0
   rdf: 0
+  redis: 0
   responsive_image: 0
   search: 0
   shortcut: 0
@@ -54,7 +55,6 @@ module:
   toolbar: 0
   tour: 0
   user: 0
-  views_ui: 0
   workflows: 0
   content_translation: 10
   views: 10

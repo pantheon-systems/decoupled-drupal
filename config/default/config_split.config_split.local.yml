@@ -4,7 +4,7 @@ status: false
 dependencies: {  }
 id: local
 label: Local
-description: ''
+description: 'Config for Lando local environment'
 folder: ../config/envs/local
 module:
   views_ui: 0

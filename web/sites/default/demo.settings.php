@@ -28,11 +28,6 @@ $is_local_env = $pantheon_env == 'lando';
 $is_circle_env = isset($_ENV['CIRCLECI']);
 $is_ci_env = $is_circle_env || isset($_ENV['CI']);;
 
-
-/**
- * Environment Indicator settings.
- */
-
 /**
  * Config split settings.
  */
@@ -44,8 +39,6 @@ $config_directories['sync'] = $repo_root . "/config/default";
 
 $split_filename_prefix = 'config_split.config_split';
 $split_filepath_prefix = $config_directories['sync'] . '/' . $split_filename_prefix;
-
-
 
 /**
  * Set environment splits.
@@ -73,7 +66,7 @@ if (!isset($split)) {
     $split = 'local';
   }
 
-  // Acquia only envs.
+  // Pantheon only envs.
 
   if ($is_pantheon_env) {
     if ($pantheon_env == 'live') {
@@ -97,10 +90,31 @@ if ($split != 'none') {
  * Redis settings.
  */
 
+if (defined('PANTHEON_ENVIRONMENT')) {
+  // Include the Redis services.yml file. Adjust the path if you installed to a contrib or other subdirectory.
+  $settings['container_yamls'][] = $repo_root . '/web/modules/contrib/redis/example.services.yml';
+
+  //phpredis is built into the Pantheon application container.
+  $settings['redis.connection']['interface'] = 'PhpRedis';
+  // These are dynamic variables handled by Pantheon.
+  $settings['redis.connection']['host']      = $_ENV['CACHE_HOST'];
+  $settings['redis.connection']['port']      = $_ENV['CACHE_PORT'];
+  $settings['redis.connection']['password']  = $_ENV['CACHE_PASSWORD'];
+
+  $settings['redis_compress_length'] = 100;
+  $settings['redis_compress_level'] = 1;
+
+  $settings['cache']['default'] = 'cache.backend.redis'; // Use Redis as the default cache.
+  $settings['cache_prefix']['default'] = 'pantheon-redis';
+  
+  $settings['cache']['bins']['form'] = 'cache.backend.database'; // Use the database for forms
+}
+
 
 /**
  * Environment Indicator settings.
  */
+
 $config['environment_indicator_overwrite'] = TRUE;
 $config['environment_indicator.indicator']['fg_color'] = '#ffffff';
 
