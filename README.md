@@ -4,7 +4,7 @@ This is a Drupal 9 site created with Pantheon Build tools. It uses CircleCI for 
 
 ## Key Project Information
 
-[![CircleCI](https://circleci.com/gh/pantheon-systems/dbridge-drupal-backend-demo.svg?style=shield&circle-token=5f2515763a969ddbcb1eaf64bb025986f5d904c0)](https://circleci.com/gh/pantheon-systems/dbridge-drupal-backend-demo)
+[![CircleCI](https://circleci.com/gh/pantheon-systems/dbridge-drupal-backend-demo.svg?style=shield&circle-token=3ca31e813e5bc7ab7bc8eee56c86ec3c418a4026)](https://circleci.com/gh/pantheon-systems/dbridge-drupal-backend-demo)
 [![Pantheon Dashboard demo-decoupled-bridge](https://img.shields.io/badge/dashboard-demo_decoupled_bridge-yellow.svg)](https://dashboard.pantheon.io/sites/012f039b-c885-4391-a277-1968da264cae#dev/code)
 [![Pantheon Dev Site demo-decoupled-bridge](https://img.shields.io/badge/site-demo_decoupled_bridge-blue.svg)](http://dev-demo-decoupled-bridge.pantheonsite.io/)
 
