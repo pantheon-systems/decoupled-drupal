@@ -4,7 +4,7 @@ This is a Drupal 9 site created with Pantheon Build tools. It uses CircleCI for 
 
 ## Key Project Information
 
-[![CircleCI](https://circleci.com/gh/pantheon-systems/dbridge-drupal-backend-demo.svg?style=shield)](https://circleci.com/gh/pantheon-systems/dbridge-drupal-backend-demo)
+[![CircleCI](https://circleci.com/gh/pantheon-systems/decoupled-drupal-backend-demo.svg?style=shield)](https://circleci.com/gh/pantheon-systems/decoupled-drupal-backend-demo)
 [![Pantheon Dashboard demo-decoupled-bridge](https://img.shields.io/badge/dashboard-demo_decoupled_bridge-yellow.svg)](https://dashboard.pantheon.io/sites/012f039b-c885-4391-a277-1968da264cae#dev/code)
 [![Pantheon Dev Site demo-decoupled-bridge](https://img.shields.io/badge/site-demo_decoupled_bridge-blue.svg)](http://dev-demo-decoupled-bridge.pantheonsite.io/)
 
@@ -12,7 +12,7 @@ This is a Drupal 9 site created with Pantheon Build tools. It uses CircleCI for 
 ## Quickstart
 1. Clone this repo: 
 ```
-git clone git@github.com:pantheon-systems/dbridge-drupal-backend-demo.git
+git clone git@github.com:pantheon-systems/decoupled-drupal-backend-demo.git
 ```
 2. Install composer dependencies:
 ```
