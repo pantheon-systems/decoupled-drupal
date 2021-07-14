@@ -90,7 +90,7 @@ if ($split != 'none') {
  * Redis settings.
  */
 
-/* if (defined('PANTHEON_ENVIRONMENT')) {
+if (defined('PANTHEON_ENVIRONMENT')) {
   // Include the Redis services.yml file. Adjust the path if you installed to a contrib or other subdirectory.
   $settings['container_yamls'][] = $repo_root . '/web/modules/contrib/redis/example.services.yml';
 
@@ -109,7 +109,7 @@ if ($split != 'none') {
   
   $settings['cache']['bins']['form'] = 'cache.backend.database'; // Use the database for forms
 }
- */
+
 
 /**
  * Environment Indicator settings.
@@ -138,18 +138,4 @@ if ($is_pantheon_prod_env) {
   $config['environment_indicator.indicator']['name'] = 'Live';
   $config['environment_indicator.indicator']['bg_color'] = '#aa3333';
 }
-
-
-
-
-
-/**
- * Load universal local development override configuration, if available.
- */
-  
-  if ($is_local_env) {
-    //Add local settings here
-  
-  }
-
 
