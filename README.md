@@ -14,7 +14,7 @@ This is a Drupal 9 site created with Pantheon Build tools. It uses CircleCI for 
 ```
 git clone git@github.com:pantheon-systems/dbridge-drupal-backend-demo.git
 ```
-2. Install composer dependencies
+2. Install composer dependencies:
 ```
 cd <your repo> && composer install
 ```
@@ -22,7 +22,7 @@ cd <your repo> && composer install
 ```
 cp web/sites/default/default.settings.local.php web/sites/default/settings.local.php
 ```
-4. Start local developmen environment
+4. Start local development environment:
 ```
 lando start
 ```
