@@ -4,7 +4,7 @@ This is a Drupal 9 site created with Pantheon Build tools. It uses CircleCI for 
 
 ## Key Project Information
 
-[![CircleCI](https://circleci.com/gh/pantheon-systems/dbridge-drupal-backend-demo.svg?style=shield&circle-token=3ca31e813e5bc7ab7bc8eee56c86ec3c418a4026)](https://circleci.com/gh/pantheon-systems/dbridge-drupal-backend-demo)
+[![CircleCI](https://circleci.com/gh/pantheon-systems/dbridge-drupal-backend-demo.svg?style=shield)](https://circleci.com/gh/pantheon-systems/dbridge-drupal-backend-demo)
 [![Pantheon Dashboard demo-decoupled-bridge](https://img.shields.io/badge/dashboard-demo_decoupled_bridge-yellow.svg)](https://dashboard.pantheon.io/sites/012f039b-c885-4391-a277-1968da264cae#dev/code)
 [![Pantheon Dev Site demo-decoupled-bridge](https://img.shields.io/badge/site-demo_decoupled_bridge-blue.svg)](http://dev-demo-decoupled-bridge.pantheonsite.io/)
 
@@ -14,7 +14,7 @@ This is a Drupal 9 site created with Pantheon Build tools. It uses CircleCI for 
 ```
 git clone git@github.com:pantheon-systems/dbridge-drupal-backend-demo.git
 ```
-2. Install composer dependencies:
+2. Install composer dependencies
 ```
 cd <your repo> && composer install
 ```
@@ -22,7 +22,7 @@ cd <your repo> && composer install
 ```
 cp web/sites/default/default.settings.local.php web/sites/default/settings.local.php
 ```
-4. Start local development environment:
+4. Start local developmen environment
 ```
 lando start
 ```
