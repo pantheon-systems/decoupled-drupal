@@ -17,7 +17,7 @@ $repo_root = dirname(DRUPAL_ROOT);
  */
 $is_pantheon_env = isset($_ENV['PANTHEON_ENVIRONMENT']);
 $pantheon_env = $is_pantheon_env ? $_ENV['PANTHEON_ENVIRONMENT'] : NULL;
-$is_pantheon_dev_env = $pantheon_env == 'dev';
+$is_pantheon_dev_env = $pantheon_env == 'dev' || str_contains($pantheon_env, 'ci-') || str_contains($pantheon_env, 'pr-');
 $is_pantheon_stage_env = $pantheon_env == 'test';
 $is_pantheon_prod_env = $pantheon_env == 'live';
 $is_local_env = $pantheon_env == 'lando';
@@ -90,7 +90,7 @@ if ($split != 'none') {
  * Redis settings.
  */
 
-if (defined('PANTHEON_ENVIRONMENT')) {
+/* if (defined('PANTHEON_ENVIRONMENT')) {
   // Include the Redis services.yml file. Adjust the path if you installed to a contrib or other subdirectory.
   $settings['container_yamls'][] = $repo_root . '/web/modules/contrib/redis/example.services.yml';
 
@@ -109,7 +109,7 @@ if (defined('PANTHEON_ENVIRONMENT')) {
   
   $settings['cache']['bins']['form'] = 'cache.backend.database'; // Use the database for forms
 }
-
+ */
 
 /**
  * Environment Indicator settings.
@@ -125,14 +125,17 @@ if ($is_local_env) {
 }
 
 if ($is_pantheon_dev_env){
+  $config['environment_indicator.indicator']['name'] = 'Dev';
   $config['environment_indicator.indicator']['bg_color'] = '#33aa3c';
 }
 
 if($is_pantheon_stage_env) {
+  $config['environment_indicator.indicator']['name'] = 'Test';
   $config['environment_indicator.indicator']['bg_color'] = '#ffBB00';
 }
 
 if ($is_pantheon_prod_env) {
+  $config['environment_indicator.indicator']['name'] = 'Live';
   $config['environment_indicator.indicator']['bg_color'] = '#aa3333';
 }
 
