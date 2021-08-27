@@ -5,3 +5,11 @@ decoupled_preview.settings_form:
     _form: 'Drupal\decoupled_preview\Form\SettingsForm'
   requirements:
     _permission: 'administer decoupled_preview configuration'
+decoupled_preview.preview:
+  path: '/node/{node}/preview'
+  defaults:
+    _title: 'Preview'
+    _controller: '\Drupal\decoupled_preview\Controller\DecoupledPreviewController::build'
+  requirements:
+    _permission: 'access content'
+  node: \d+
