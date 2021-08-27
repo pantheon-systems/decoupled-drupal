@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "119d26c3976787adf9fedbb042fa5b89",
+    "content-hash": "98a4f84ff48895441bd131f4f289c6c2",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2002,6 +2002,104 @@
                 "source": "https://github.com/drupal/core-recommended/tree/9.2.1"
             },
             "time": "2021-07-07T13:04:41+00:00"
+        },
+        {
+            "name": "drupal/decoupled_preview",
+            "version": "dev-DB-530",
+            "dist": {
+                "type": "path",
+                "url": "web/modules/custom/decoupled_preview",
+                "reference": "f971b24f5379ef836f940936c261399ce1d51c65"
+            },
+            "require": {
+                "drupal/decoupled_router": "^2"
+            },
+            "type": "drupal-module",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Your name here",
+                    "homepage": "https://www.drupal.org/u/your_name_here",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://www.drupal.org/node/NID/committers",
+                    "role": "Contributors"
+                }
+            ],
+            "description": "Preview Drupal content on your decoupled site.",
+            "homepage": "https://www.drupal.org/project/decoupled_preview",
+            "keywords": [
+                "Drupal",
+                "decoupled",
+                "preview"
+            ],
+            "support": {
+                "issues": "https://www.drupal.org/project/issues/decoupled_preview",
+                "source": "http://cgit.drupalcode.org/decoupled_preview"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "drupal/decoupled_router",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/decoupled_router.git",
+                "reference": "2.0.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/decoupled_router-2.0.2.zip",
+                "reference": "2.0.2",
+                "shasum": "6a60f8013d36e21b8f71bfab8dc845558b1cb873"
+            },
+            "require": {
+                "drupal/core": "^8.8 || ^9"
+            },
+            "require-dev": {
+                "drupal/redirect": "^1.0@beta"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.2",
+                    "datestamp": "1608299754",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Mateu Aguiló Bosch",
+                    "homepage": "https://www.drupal.org/user/103796",
+                    "email": "mateu.aguilo.bosch@gmail.com"
+                },
+                {
+                    "name": "e0ipso",
+                    "homepage": "https://www.drupal.org/user/550110"
+                },
+                {
+                    "name": "mglaman",
+                    "homepage": "https://www.drupal.org/user/2416470"
+                }
+            ],
+            "description": "Provides an endpoint that will help you resolve path aliases and redirects for entity related routes.",
+            "homepage": "https://www.drupal.org/project/decoupled_router",
+            "support": {
+                "source": "https://git.drupalcode.org/project/decoupled_router"
+            }
         },
         {
             "name": "drupal/drupal-driver",
@@ -10979,8 +11077,10 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "drupal/decoupled_preview": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
@@ -10990,5 +11090,5 @@
     "platform-overrides": {
         "php": "7.3"
     },
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }

@@ -1,0 +1,7 @@
+decoupled_preview.settings_form:
+  path: '/admin/config/system/decoupled-preview'
+  defaults:
+    _title: 'Decoupled Preview settings'
+    _form: 'Drupal\decoupled_preview\Form\SettingsForm'
+  requirements:
+    _permission: 'administer decoupled_preview configuration'

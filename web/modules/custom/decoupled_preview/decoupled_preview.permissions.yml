@@ -1,0 +1,4 @@
+administer decoupled_preview configuration:
+  title: 'Administer decoupled_preview configuration'
+  description: 'Optional description.'
+  restrict access: true
