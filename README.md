@@ -56,6 +56,15 @@ Sync dev environment database and files to local environment:
 lando pull --database=dev --files=dev --code=none
 ```
 
+## Decoupled Preview
 
+Decoupled preview can be configured at admin/structure/dp-preview-site
+(Structure -> Preview Sites.)
 
+Local config includes a preview site for a local NextJS instance. The preview secret
+must be set manually. Or alternatively it can be overridden in settings.local.php
 
+$config['decoupled_preview.dp_preview_site.nextjs_demo']['secret'] = 'mysecret';
+
+After configuring decoupled preview, a preview link will display on the preview 
+tab for all nodes.

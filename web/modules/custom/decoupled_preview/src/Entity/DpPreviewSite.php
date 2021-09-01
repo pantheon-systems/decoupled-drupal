@@ -43,6 +43,7 @@ use Drupal\decoupled_preview\DpPreviewSiteInterface;
  *     "id",
  *     "label",
  *     "url",
+ *     "secret",
  *   }
  * )
  */
@@ -74,6 +75,6 @@ class DpPreviewSite extends ConfigEntityBase implements DpPreviewSiteInterface {
    *
    * @var string
    */
-  public $secret;
+  protected $secret;
 
 }

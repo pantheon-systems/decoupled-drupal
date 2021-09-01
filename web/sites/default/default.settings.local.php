@@ -172,3 +172,7 @@ $databases = array(
       ),
     ),
   );
+
+// Default value for preview secret. Alternatively you can remove this and set
+// the value in the UI at admin/structure/dp-preview-site
+$config['decoupled_preview.dp_preview_site.nextjs_demo']['secret'] = 'mysecret';
