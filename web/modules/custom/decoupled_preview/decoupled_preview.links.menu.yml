@@ -1,6 +1,5 @@
-decoupled_preview.settings_form:
-  title: Decoupled Preview
-  description: Configure Decoupled Preview.
-  parent: system.admin_config_system
-  route_name: decoupled_preview.settings_form
-  weight: 10
+entity.dp_preview_site.overview:
+  title: Preview Sites
+  parent: system.admin_structure
+  description: 'List of preview sites to extend site functionality.'
+  route_name: entity.dp_preview_site.collection

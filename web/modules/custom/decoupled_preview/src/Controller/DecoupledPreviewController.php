@@ -17,22 +17,37 @@ class DecoupledPreviewController extends ControllerBase {
   public function build($node) {
     $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $node);
 
-    $preview_url = \Drupal::config('decoupled_preview.settings')->get('preview_url');
-    $preview_secret = \Drupal::config('decoupled_preview.settings')->get('preview_secret');
+    $storage = \Drupal::entityTypeManager()->getStorage('dp_preview_site');
+    $ids = \Drupal::entityQuery('dp_preview_site')->execute();
+    $sites = $storage->loadMultiple($ids);
 
-    $options = [
-      'query' => [
-        'secret' => $preview_secret,
-        'slug' => $alias
-      ],
-      'attributes' => ['target' => '_blank'],
-    ];
+    $links = [];
 
-    $link = Link::fromTextAndUrl('Open in new tab', Url::fromUri($preview_url, $options));
+    foreach($sites as $site) {
+      $title = $site->label();
+      $url = $site->get('url'); 
+      $secret = $site->get('secret');
+
+      $options = [
+        'query' => [
+          'secret' => $secret,
+          'slug' => $alias
+        ],
+        'attributes' => ['target' => '_blank'],
+      ];
+
+      $link = Link::fromTextAndUrl($title, Url::fromUri($url, $options));
+      $links[] = $link->toString();
+    }
+
+    $list = '';
+    foreach($links as $link) {
+      $list .= '<li>' . $link . '</li>';
+    }
 
     $build['content'] = [
       '#type' => 'item',
-      '#markup' => "<p>Preview: {$link->toString()} </p>",
+      '#markup' => "<ul>{$list}</ul>",
     ];
 
     return $build;
