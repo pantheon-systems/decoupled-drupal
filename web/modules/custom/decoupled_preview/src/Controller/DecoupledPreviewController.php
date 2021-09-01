@@ -44,6 +44,9 @@ class DecoupledPreviewController extends ControllerBase {
     foreach($links as $link) {
       $list .= '<li>' . $link . '</li>';
     }
+    if ($list === '') {
+      $list = '<li>' . $this->t('No preview sites available.') . '</li>';
+    }
 
     $build['content'] = [
       '#type' => 'item',

@@ -14,3 +14,4 @@ decoupled_preview.dp_preview_site.*:
       type: string
     secret:
       type: string
+      exportable: false

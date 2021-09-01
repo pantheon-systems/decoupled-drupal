@@ -43,7 +43,6 @@ use Drupal\decoupled_preview\DpPreviewSiteInterface;
  *     "id",
  *     "label",
  *     "url",
- *     "secret",
  *   }
  * )
  */
