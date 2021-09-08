@@ -1,0 +1,40 @@
+entity.dp_preview_site.collection:
+  path: '/admin/structure/dp-preview-site'
+  defaults:
+    _entity_list: 'dp_preview_site'
+    _title: 'Preview Site configuration'
+  requirements:
+    _permission: 'administer dp_preview_site'
+
+entity.dp_preview_site.add_form:
+  path: '/admin/structure/dp_preview_site/add'
+  defaults:
+    _entity_form: 'dp_preview_site.add'
+    _title: 'Add a preview site'
+  requirements:
+    _permission: 'administer dp_preview_site'
+
+entity.dp_preview_site.edit_form:
+  path: '/admin/structure/dp-preview-site/{dp_preview_site}'
+  defaults:
+    _entity_form: 'dp_preview_site.edit'
+    _title: 'Edit a preview site'
+  requirements:
+    _permission: 'administer dp_preview_site'
+
+entity.dp_preview_site.delete_form:
+  path: '/admin/structure/dp-preview-site/{dp_preview_site}/delete'
+  defaults:
+    _entity_form: 'dp_preview_site.delete'
+    _title: 'Delete a preview site'
+  requirements:
+    _permission: 'administer dp_preview_site'
+
+decoupled_preview.preview:
+  path: '/node/{node}/preview'
+  defaults:
+    _title: 'Preview'
+    _controller: '\Drupal\decoupled_preview\Controller\DecoupledPreviewController::build'
+  requirements:
+    _permission: 'administer dp_preview_site'
+  node: \d+

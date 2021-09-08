@@ -7,6 +7,10 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "path",
+            "url": "web/modules/custom/decoupled_preview"
         }
     ],
     "require": {
@@ -18,6 +22,7 @@
         "drupal/config_split": "^1.7",
         "drupal/core-composer-scaffold": "^9",
         "drupal/core-recommended": "^8.8 || ^9",
+        "drupal/decoupled_preview": "dev-DB-530",
         "drupal/environment_indicator": "^4.0",
         "drupal/pantheon_advanced_page_cache": "^1.2",
         "drupal/redis": "^1.5",
@@ -47,7 +52,7 @@
     "conflict": {
             "drupal/drupal": "*"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
         "classmap": [
