@@ -1,0 +1,49 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function decoupled_preview_form_node_form_alter(&$form, &$form_state) {
+  // TODO - Check for administer dp_preview_site permission before altering
+  $node = $form_state->getFormObject()->getEntity();
+  $preview_mode = $node->type->entity->getPreviewMode();
+
+  $form['actions']['preview'] = [
+    '#type' => 'submit',
+    '#access' => $preview_mode != DRUPAL_DISABLED && ($node->access('create') || $node->access('update')),
+    '#value' => t('Decoupled Preview'),
+    '#weight' => 20,
+    '#submit' => ['::submitForm', '_decoupled_preview_submit_decoupled_preview'],
+  ];
+}
+
+/**
+ * Stores form state in the private tempstore and redirects to decoupled preview
+ * form.
+ *
+ * @param array $form
+ * @param FormStateInterface $form_state
+ * @return void
+ */
+function _decoupled_preview_submit_decoupled_preview(array &$form, FormStateInterface $form_state) {
+  $entity = $form_state->getFormObject()->getEntity();
+  $entity->in_preview = TRUE;
+  $uuid = $entity->uuid();
+
+  // Service used to store uuid and respective form object in memory.
+  $temp_store = \Drupal::service('tempstore.private');
+  $store = $temp_store->get('node_preview');
+  // Setting storage for preview.
+  $store->set($uuid, $form_state);
+
+  // Pass parameters used for preview
+  $route_parameters = [
+    // Should node preview be in the path instead rather than in the query string?
+    'node_preview' => $uuid,
+    'node' => $entity->id(),
+  ];
+
+  $form_state->setRedirect('decoupled_preview.preview', $route_parameters);
+}

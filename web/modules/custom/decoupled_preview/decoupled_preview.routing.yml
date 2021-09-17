@@ -31,10 +31,12 @@ entity.dp_preview_site.delete_form:
     _permission: 'administer dp_preview_site'
 
 decoupled_preview.preview:
-  path: '/node/{node}/preview'
+  path: '/node/{node}/preview/{node_preview}'
   defaults:
     _title: 'Preview'
     _controller: '\Drupal\decoupled_preview\Controller\DecoupledPreviewController::build'
+    node_preview: false
   requirements:
+    # Should we also be checking for access to the node in the temp store?
     _permission: 'administer dp_preview_site'
   node: \d+

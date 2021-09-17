@@ -5,6 +5,7 @@ namespace Drupal\decoupled_preview\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\Core\Render\Markup;
 
 /**
  * Returns responses for Decoupled Preview routes.
@@ -14,11 +15,10 @@ class DecoupledPreviewController extends ControllerBase {
   /**
    * Builds the response.
    */
-  public function build($node) {
+  public function build($node, $node_preview = FALSE) {
     $markup = '';
 
-    $is_preview = str_contains($node, '-');
-    if ($is_preview) {
+    if ($node_preview) {
       $markup .= '<p>PREVIEW DURING EDIT MODE</p>';
     }
 
@@ -46,18 +46,13 @@ class DecoupledPreviewController extends ControllerBase {
       $links[] = $link->toString();
     }
 
-    $list = '';
-    foreach ($links as $link) {
-      $list .= '<li>' . $link . '</li>';
-    }
-    if ($list === '') {
-      $list = '<li>' . $this->t('No preview sites available.') . '</li>';
-    }
+    $previewForm = $this->formBuilder()->getForm('Drupal\decoupled_preview\Form\EditPreviewForm', $node, $alias);
+    $renderer = \Drupal::service('renderer');
+    $previewFormHtml = $renderer->render($previewForm);
+    $markup .= $previewFormHtml;
 
-    $markup .= '<ul>' . $list . '</ul>';
-
-    if ($is_preview) {
-      $form_state = \Drupal::service('tempstore.private')->get('node_preview')->get($node);
+    if ($node_preview) {
+      $form_state = \Drupal::service('tempstore.private')->get('node_preview')->get($node_preview);
       $entity = $form_state->getFormObject()->getEntity();
 
       $body = $entity->get('body')->value;
@@ -74,7 +69,7 @@ class DecoupledPreviewController extends ControllerBase {
 
     $build['content'] = [
       '#type' => 'item',
-      '#markup' => $markup,
+      '#markup' => Markup::create($markup),
     ];
 
     return $build;
