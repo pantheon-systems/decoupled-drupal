@@ -4,4 +4,4 @@ status: true
 dependencies: {  }
 id: nextjs_demo
 label: 'NextJS Demo'
-url: 'http://localhost:3000/api/preview'
+url: 'http://drupalnext.lndo.site/api/preview'

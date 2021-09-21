@@ -31,12 +31,19 @@ function _decoupled_preview_submit_decoupled_preview(array &$form, FormStateInte
   $entity = $form_state->getFormObject()->getEntity();
   $entity->in_preview = TRUE;
   $uuid = $entity->uuid();
+  $key = \Drupal::currentUser()->id() . '_' . $uuid;
 
   // Service used to store uuid and respective form object in memory.
-  $temp_store = \Drupal::service('tempstore.private');
-  $store = $temp_store->get('node_preview');
+  $temp_store_private = \Drupal::service('tempstore.private');
+  $store_private = $temp_store_private->get('node_preview');
   // Setting storage for preview.
-  $store->set($uuid, $form_state);
+  $store_private->set($uuid, $form_state);
+
+  // Also add a copy in the shared tempstore, for easy access via API.
+  $temp_store_shared = \Drupal::service('tempstore.shared');
+  $store_shared = $temp_store_shared->get('decoupled_preview');
+  // Setting storage for preview.
+  $store_shared->set($key, $form_state);
 
   // Pass parameters used for preview
   $route_parameters = [
