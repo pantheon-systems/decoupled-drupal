@@ -18,10 +18,6 @@ class DecoupledPreviewController extends ControllerBase {
   public function build($node, $node_preview = FALSE) {
     $markup = '';
 
-    if ($node_preview) {
-      $markup .= '<p>PREVIEW DURING EDIT MODE</p>';
-    }
-
     $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $node);
     $storage = \Drupal::entityTypeManager()->getStorage('dp_preview_site');
     $ids = \Drupal::entityQuery('dp_preview_site')->execute();
@@ -50,22 +46,6 @@ class DecoupledPreviewController extends ControllerBase {
     $renderer = \Drupal::service('renderer');
     $previewFormHtml = $renderer->render($previewForm);
     $markup .= $previewFormHtml;
-
-    if ($node_preview) {
-      $form_state = \Drupal::service('tempstore.private')->get('node_preview')->get($node_preview);
-      $entity = $form_state->getFormObject()->getEntity();
-
-      $body = $entity->get('body')->value;
-      $markup .= "<p>Body: {$body}</p>";
-
-      $serializer = \Drupal::service('serializer');
-      $data = $serializer->serialize(
-        $entity,
-        'json',
-        ['plugin_id' => 'entity']
-      );
-      $markup .= "<p>Serialized Data: {$data}</p>";
-    }
 
     $build['content'] = [
       '#type' => 'item',

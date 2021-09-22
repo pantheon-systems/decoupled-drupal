@@ -5,7 +5,8 @@
   "keywords": ["Drupal", "decoupled", "preview"],
   "license": "GPL-2.0+",
   "require": {
-    "drupal/decoupled_router": "^2"
+    "drupal/decoupled_router": "^2",
+    "drupal/jsonapi_resources": "^1.0@beta"
   },
   "homepage": "https://www.drupal.org/project/decoupled_preview",
   "authors": [
