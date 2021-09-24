@@ -50,5 +50,3 @@ decoupled_preview.preview_resource:
     # The same route requirements for any route definition may also be used
     # by a JSON:API resource route.
     _permission: 'access content'
-  options:
-    no_cache: TRUE

@@ -1,6 +1,7 @@
 <?php
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Cache\Cache;
 
 /**
  * Implements hook_form_FORM_ID_alter().
@@ -44,6 +45,9 @@ function _decoupled_preview_submit_decoupled_preview(array &$form, FormStateInte
   $store_shared = $temp_store_shared->get('decoupled_preview');
   // Setting storage for preview.
   $store_shared->set($key, $form_state);
+
+  // This invalidates the entry in the page cache, which we can target by tag.
+  Cache::invalidateTags(["decoupled_preview:{$key}"]);
 
   // Pass parameters used for preview
   $route_parameters = [
