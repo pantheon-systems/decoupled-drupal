@@ -22,7 +22,7 @@ class EditPreviewForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $uuid = FALSE, $alias = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, $uuid = FALSE, $alias = NULL, $nid = FALSE) {
     $storage = \Drupal::entityTypeManager()->getStorage('dp_preview_site');
     $ids = \Drupal::entityQuery('dp_preview_site')->execute();
     $sites = $storage->loadMultiple($ids);
@@ -46,6 +46,7 @@ class EditPreviewForm extends FormBase {
           'query' => [
             'secret' => $secret,
             'slug' => $alias,
+            'key' => $nid,
           ],
         ];
       }

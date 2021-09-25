@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Route;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\jsonapi\CacheableResourceResponse;
 use Drupal\Core\Cache\Cache;
+use Drupal\node\Entity\Node;
 
 /**
  * Processes a request for a collection containing a resource being edited.
@@ -21,8 +22,6 @@ class PreviewResource extends EntityResourceBase {
    *
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   The request.
-   * @param \Drupal\jsonapi\ResourceType\ResourceType[] $resource_types
-   *   The route resource types.
    *
    * @return \Drupal\jsonapi\ResourceResponse
    *   The response.
@@ -30,16 +29,23 @@ class PreviewResource extends EntityResourceBase {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function process(Request $request, array $resource_types) {
-    // TODO - prevent this route from being cached
+  public function process(Request $request) {
     $tempstore_key = $request->get('key');
 
-    $form_state = \Drupal::service('tempstore.shared')->get('decoupled_preview')->get($tempstore_key);
-    // Try / catch or better error handling.
-    $entity = $form_state->getFormObject()->getEntity();
-    $nid = $entity->id();
+    // If key is a uuid, we're in edit preview mode - get entity from tempstore.
+    if (str_contains($tempstore_key, '-')) {
+      $form_state = \Drupal::service('tempstore.shared')->get('decoupled_preview')->get($tempstore_key);
+      // Try / catch or better error handling.
+      $entity = $form_state->getFormObject()->getEntity();
+      $nid = $entity->id();
+    }
+    // If key is a nid, we're in published preview mode - get actual node.
+    else {
+      $nid = $tempstore_key;
+      $entity = Node::load($nid);
+    }
 
-    /**
+    /*
      * This is a pretty big hammer, and could make the entity less cachable for
      * other JSON:API endpoints.
      * TODO - refine this, ideally making t possible to invalidate using a cache

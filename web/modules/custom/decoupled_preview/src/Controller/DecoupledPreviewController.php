@@ -42,7 +42,7 @@ class DecoupledPreviewController extends ControllerBase {
       $links[] = $link->toString();
     }
 
-    $previewForm = $this->formBuilder()->getForm('Drupal\decoupled_preview\Form\EditPreviewForm', $node_preview, $alias);
+    $previewForm = $this->formBuilder()->getForm('Drupal\decoupled_preview\Form\EditPreviewForm', $node_preview, $alias, $node);
     $renderer = \Drupal::service('renderer');
     $previewFormHtml = $renderer->render($previewForm);
     $markup .= $previewFormHtml;
