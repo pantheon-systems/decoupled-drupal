@@ -31,10 +31,22 @@ entity.dp_preview_site.delete_form:
     _permission: 'administer dp_preview_site'
 
 decoupled_preview.preview:
-  path: '/node/{node}/preview'
+  path: '/node/{node}/preview/{node_preview}'
   defaults:
     _title: 'Preview'
     _controller: '\Drupal\decoupled_preview\Controller\DecoupledPreviewController::build'
+    node_preview: false
   requirements:
+    # Should we also be checking for access to the node in the temp store?
     _permission: 'administer dp_preview_site'
   node: \d+
+
+# Custom JSON:API endpoint that provides data to FE preview
+decoupled_preview.preview_resource:
+  path: '/%jsonapi%/decoupled-preview/{key}'
+  defaults:
+    _jsonapi_resource: Drupal\decoupled_preview\Resource\PreviewResource
+  requirements:
+    # The same route requirements for any route definition may also be used
+    # by a JSON:API resource route.
+    _permission: 'access content'
