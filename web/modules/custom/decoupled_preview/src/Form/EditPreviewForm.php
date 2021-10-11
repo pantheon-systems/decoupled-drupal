@@ -26,33 +26,38 @@ class EditPreviewForm extends FormBase {
     $storage = \Drupal::entityTypeManager()->getStorage('dp_preview_site');
     $ids = \Drupal::entityQuery('dp_preview_site')->execute();
     $sites = $storage->loadMultiple($ids);
+    $nodeType = \Drupal::entityTypeManager()->getStorage('node')
+      ->load($nid)
+      ->bundle();
 
     foreach ($sites as $site) {
-      $title = $site->label();
-      $url = $site->get('url');
-      $secret = $site->get('secret');
+      if (in_array($nodeType, array_values($site->get('content_type')), TRUE) || empty(array_filter(array_values($site->get('content_type'))))) {
+        $title = $site->label();
+        $url = $site->get('url');
+        $secret = $site->get('secret');
 
-      if ($uuid) {
-        $options = [
-          'query' => [
-            'secret' => $secret,
-            'slug' => $alias,
-            'key' => \Drupal::currentUser()->id() . '_' . $uuid,
-          ],
-        ];
-      }
-      else {
-        $options = [
-          'query' => [
-            'secret' => $secret,
-            'slug' => $alias,
-            'key' => $nid,
-          ],
-        ];
-      }
+        if ($uuid) {
+          $options = [
+            'query' => [
+              'secret' => $secret,
+              'slug' => $alias,
+              'key' => \Drupal::currentUser()->id() . '_' . $uuid,
+            ],
+          ];
+        }
+        else {
+          $options = [
+            'query' => [
+              'secret' => $secret,
+              'slug' => $alias,
+              'key' => $nid,
+            ],
+          ];
+        }
 
-      $url = Url::fromUri($url, $options)->toString();
-      $view_mode_options[$url] = $title;
+        $url = Url::fromUri($url, $options)->toString();
+        $view_mode_options[$url] = $title;
+      }
     }
 
     $form['preview_site'] = [

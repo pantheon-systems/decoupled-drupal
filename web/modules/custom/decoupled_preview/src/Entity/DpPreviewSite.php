@@ -44,6 +44,7 @@ use Drupal\decoupled_preview\DpPreviewSiteInterface;
  *     "label",
  *     "url",
  *     "secret",
+ *     "content_type",
  *   }
  * )
  */
@@ -76,5 +77,12 @@ class DpPreviewSite extends ConfigEntityBase implements DpPreviewSiteInterface {
    * @var string
    */
   protected $secret;
+
+  /**
+   * The specific content type.
+   *
+   * @var array
+   */
+  protected $content_type;
 
 }

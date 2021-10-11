@@ -45,6 +45,7 @@ class DpPreviewSiteForm extends EntityForm {
       '#description' => $this->t('URL for the preview site.'),
       '#required' => TRUE,
     ];
+
     $form['secret'] = [
       '#type' => 'password',
       '#title' => $this->t('Secret'),
@@ -57,6 +58,21 @@ class DpPreviewSiteForm extends EntityForm {
     }
     else {
       $form['secret']['#old-value'] = $this->entity->get('secret');
+    }
+
+    $form['content_type'] = [
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Select Content Type'),
+      '#description' => $this->t('If no content types are specified, the preview site should display for all content types'),
+      '#default_value' => !empty($this->entity->get('content_type')) ? array_values($this->entity->get('content_type')) : [],
+    ];
+
+    $types = $this->entityTypeManager
+      ->getStorage('node_type')
+      ->loadMultiple();
+
+    foreach ($types as $type) {
+      $form['content_type']['#options'][$type->getOriginalId()] = $type->label();
     }
 
     return $form;
