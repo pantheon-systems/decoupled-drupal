@@ -85,4 +85,17 @@ class DpPreviewSite extends ConfigEntityBase implements DpPreviewSiteInterface {
    */
   protected $content_type;
 
+  /**
+   * {@inheritdoc}
+   */
+  public function checkEnabledContentType($nodeType) {
+    $contentType = $this->get('content_type');
+    if (in_array($nodeType, array_values($contentType), TRUE) || empty(array_filter(array_values($contentType)))) {
+      return TRUE;
+    }
+    else {
+      return FALSE;
+    }
+  }
+
 }

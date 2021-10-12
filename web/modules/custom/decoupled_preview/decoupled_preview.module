@@ -9,15 +9,28 @@ use Drupal\Core\Cache\Cache;
 function decoupled_preview_form_node_form_alter(&$form, &$form_state) {
   // TODO - Check for administer dp_preview_site permission before altering
   $node = $form_state->getFormObject()->getEntity();
-  $preview_mode = $node->type->entity->getPreviewMode();
+  $nodeType = $node->bundle();
+  $ids = \Drupal::entityQuery('dp_preview_site')->execute();
+  $previewSiteStorage = \Drupal::entityTypeManager()->getStorage('dp_preview_site');
+  $sites = $previewSiteStorage->loadMultiple($ids);
+  $enablePreview = FALSE;
+  foreach ($sites as $site) {
+    if ($site->checkEnabledContentType($nodeType)) {
+      $enablePreview = TRUE;
+    }
+  }
 
-  $form['actions']['preview'] = [
-    '#type' => 'submit',
-    '#access' => $preview_mode != DRUPAL_DISABLED && ($node->access('create') || $node->access('update')),
-    '#value' => t('Decoupled Preview'),
-    '#weight' => 20,
-    '#submit' => ['::submitForm', '_decoupled_preview_submit_decoupled_preview'],
-  ];
+  if ($enablePreview) {
+    $preview_mode = $node->type->entity->getPreviewMode();
+
+    $form['actions']['preview'] = [
+      '#type' => 'submit',
+      '#access' => $preview_mode != DRUPAL_DISABLED && ($node->access('create') || $node->access('update')),
+      '#value' => t('Decoupled Preview'),
+      '#weight' => 20,
+      '#submit' => ['::submitForm', '_decoupled_preview_submit_decoupled_preview'],
+    ];
+  }
 }
 
 /**

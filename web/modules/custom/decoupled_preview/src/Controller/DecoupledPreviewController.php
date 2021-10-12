@@ -3,8 +3,6 @@
 namespace Drupal\decoupled_preview\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Link;
-use Drupal\Core\Url;
 use Drupal\Core\Render\Markup;
 
 /**
@@ -18,41 +16,42 @@ class DecoupledPreviewController extends ControllerBase {
   public function build($node, $node_preview = FALSE) {
     $markup = '';
 
+    $entityTypeManager = \Drupal::entityTypeManager();
     $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $node);
-    $storage = \Drupal::entityTypeManager()->getStorage('dp_preview_site');
+    $storage = $entityTypeManager->getStorage('dp_preview_site');
     $ids = \Drupal::entityQuery('dp_preview_site')->execute();
     $sites = $storage->loadMultiple($ids);
-
-    $links = [];
+    $nodeType = $entityTypeManager->getStorage('node')
+      ->load($node)
+      ->bundle();
+    $enablePreview = FALSE;
 
     foreach ($sites as $site) {
-      $title = $site->label();
-      $url = $site->get('url');
-      $secret = $site->get('secret');
-
-      $options = [
-        'query' => [
-          'secret' => $secret,
-          'slug' => $alias
-        ],
-        'attributes' => ['target' => '_blank'],
-      ];
-
-      $link = Link::fromTextAndUrl($title, Url::fromUri($url, $options));
-      $links[] = $link->toString();
+      if ($site->checkEnabledContentType($nodeType)) {
+        $enablePreview = TRUE;
+      }
     }
 
-    $previewForm = $this->formBuilder()->getForm('Drupal\decoupled_preview\Form\EditPreviewForm', $node_preview, $alias, $node);
-    $renderer = \Drupal::service('renderer');
-    $previewFormHtml = $renderer->render($previewForm);
-    $markup .= $previewFormHtml;
+    if ($enablePreview) {
+      $previewForm = $this->formBuilder()->getForm('Drupal\decoupled_preview\Form\EditPreviewForm', $node_preview, $alias, $node);
+      $renderer = \Drupal::service('renderer');
+      $previewFormHtml = $renderer->render($previewForm);
+      $markup .= $previewFormHtml;
 
-    $build['content'] = [
-      '#type' => 'item',
-      '#markup' => Markup::create($markup),
-    ];
-
+      $build['content'] = [
+        '#type' => 'item',
+        '#markup' => Markup::create($markup),
+      ];
+    }
+    else {
+      $build['content'] = [
+        '#type' => 'html_tag',
+        '#tag' => 'p',
+        '#value' => $this->t('Decoupled Preview has not been configured for this content type.'),
+      ];
+    }
     return $build;
+
   }
 
 }
