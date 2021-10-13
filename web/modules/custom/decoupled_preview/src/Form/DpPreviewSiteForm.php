@@ -45,15 +45,19 @@ class DpPreviewSiteForm extends EntityForm {
       '#description' => $this->t('URL for the preview site.'),
       '#required' => TRUE,
     ];
-
     $form['secret'] = [
       '#type' => 'password',
       '#title' => $this->t('Secret'),
       '#maxlength' => 255,
-      '#default_value' => $this->entity->get('secret'),
       '#description' => $this->t('Shared secret for the preview site.'),
-      '#required' => TRUE,
     ];
+
+    if (empty($this->entity->get('secret'))) {
+      $form['secret']['#required'] = TRUE;
+    }
+    else {
+      $form['secret']['#old-value'] = $this->entity->get('secret');
+    }
 
     return $form;
   }
@@ -62,6 +66,9 @@ class DpPreviewSiteForm extends EntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
+    if (empty($form_state->getValue('secret'))) {
+      $this->entity->set('secret', $form["secret"]["#old-value"]);
+    }
     $result = parent::save($form, $form_state);
     $message_args = ['%label' => $this->entity->label()];
     $message = $result == SAVED_NEW
@@ -71,4 +78,5 @@ class DpPreviewSiteForm extends EntityForm {
     $form_state->setRedirectUrl($this->entity->toUrl('collection'));
     return $result;
   }
+
 }
