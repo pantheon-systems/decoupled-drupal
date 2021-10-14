@@ -86,6 +86,9 @@ class DpPreviewSiteForm extends EntityForm {
       $this->entity->set('secret', $form["secret"]["#old-value"]);
     }
     $result = parent::save($form, $form_state);
+    // Rebuilding the routes,
+    // as this might add/remove the Decoupled Preview local task.
+    \Drupal::service('router.builder')->setRebuildNeeded();
     $message_args = ['%label' => $this->entity->label()];
     $message = $result == SAVED_NEW
       ? $this->t('Created new preview site %label.', $message_args)

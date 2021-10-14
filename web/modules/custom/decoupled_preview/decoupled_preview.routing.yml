@@ -39,6 +39,7 @@ decoupled_preview.preview:
   requirements:
     # Should we also be checking for access to the node in the temp store?
     _permission: 'administer dp_preview_site'
+    _custom_access: '\Drupal\decoupled_preview\Controller\DecoupledPreviewController::isPreviewEnabled'
   node: \d+
 
 # Custom JSON:API endpoint that provides data to FE preview

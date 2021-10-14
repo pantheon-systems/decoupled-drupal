@@ -4,6 +4,8 @@ namespace Drupal\decoupled_preview\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\Markup;
+use Drupal\Core\Access\AccessResult;
+use Drupal\node\Entity\Node;
 
 /**
  * Returns responses for Decoupled Preview routes.
@@ -52,6 +54,38 @@ class DecoupledPreviewController extends ControllerBase {
     }
     return $build;
 
+  }
+
+  /**
+   * Custom access check to determine if preview local task should display.
+   *
+   * @param $node
+   *
+   * @return Drupal\Core\Access\AccessResult
+   *   Indicates access if at least one site is enabled for the current content
+   *   type.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   */
+  public function isPreviewEnabled($node) {
+    $entity = Node::load($node);
+    $nodeType = $entity->getType();
+
+    // A lot of this is copied from the build method. May be able to abstract
+    // into a function.
+    $entityTypeManager = \Drupal::entityTypeManager();
+    $storage = $entityTypeManager->getStorage('dp_preview_site');
+    $ids = \Drupal::entityQuery('dp_preview_site')->execute();
+    $sites = $storage->loadMultiple($ids);
+    $enablePreview = FALSE;
+
+    foreach ($sites as $site) {
+      if ($site->checkEnabledContentType($nodeType)) {
+        $enablePreview = TRUE;
+      }
+    }
+    return AccessResult::allowedIf($enablePreview);
   }
 
 }
