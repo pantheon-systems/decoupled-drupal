@@ -45,6 +45,7 @@ class DpPreviewSiteForm extends EntityForm {
       '#description' => $this->t('URL for the preview site.'),
       '#required' => TRUE,
     ];
+
     $form['secret'] = [
       '#type' => 'password',
       '#title' => $this->t('Secret'),
@@ -59,6 +60,21 @@ class DpPreviewSiteForm extends EntityForm {
       $form['secret']['#old-value'] = $this->entity->get('secret');
     }
 
+    $form['content_type'] = [
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Select Content Type'),
+      '#description' => $this->t('If no content types are specified, the preview site should display for all content types'),
+      '#default_value' => !empty($this->entity->get('content_type')) ? array_values($this->entity->get('content_type')) : [],
+    ];
+
+    $types = $this->entityTypeManager
+      ->getStorage('node_type')
+      ->loadMultiple();
+
+    foreach ($types as $type) {
+      $form['content_type']['#options'][$type->getOriginalId()] = $type->label();
+    }
+
     return $form;
   }
 
@@ -70,6 +86,9 @@ class DpPreviewSiteForm extends EntityForm {
       $this->entity->set('secret', $form["secret"]["#old-value"]);
     }
     $result = parent::save($form, $form_state);
+    // Rebuilding the routes,
+    // as this might add/remove the Decoupled Preview local task.
+    \Drupal::service('router.builder')->setRebuildNeeded();
     $message_args = ['%label' => $this->entity->label()];
     $message = $result == SAVED_NEW
       ? $this->t('Created new preview site %label.', $message_args)

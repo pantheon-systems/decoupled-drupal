@@ -23,53 +23,60 @@ class EditPreviewForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $uuid = FALSE, $alias = NULL, $nid = FALSE) {
-    $storage = \Drupal::entityTypeManager()->getStorage('dp_preview_site');
+    $entityTypeManager = \Drupal::entityTypeManager();
+    $storage = $entityTypeManager->getStorage('dp_preview_site');
     $ids = \Drupal::entityQuery('dp_preview_site')->execute();
     $sites = $storage->loadMultiple($ids);
+    $nodeType = $entityTypeManager->getStorage('node')
+      ->load($nid)
+      ->bundle();
 
     foreach ($sites as $site) {
-      $title = $site->label();
-      $url = $site->get('url');
-      $secret = $site->get('secret');
+      if ($site->checkEnabledContentType($nodeType)) {
+        $title = $site->label();
+        $url = $site->get('url');
+        $secret = $site->get('secret');
 
-      if ($uuid) {
-        $options = [
-          'query' => [
-            'secret' => $secret,
-            'slug' => $alias,
-            'key' => \Drupal::currentUser()->id() . '_' . $uuid,
-          ],
-        ];
-      }
-      else {
-        $options = [
-          'query' => [
-            'secret' => $secret,
-            'slug' => $alias,
-            'key' => $nid,
-          ],
-        ];
-      }
+        if ($uuid) {
+          $options = [
+            'query' => [
+              'secret' => $secret,
+              'slug' => $alias,
+              'key' => \Drupal::currentUser()->id() . '_' . $uuid,
+            ],
+          ];
+        }
+        else {
+          $options = [
+            'query' => [
+              'secret' => $secret,
+              'slug' => $alias,
+              'key' => $nid,
+            ],
+          ];
+        }
 
-      $url = Url::fromUri($url, $options)->toString();
-      $view_mode_options[$url] = $title;
+        $url = Url::fromUri($url, $options)->toString();
+        $view_mode_options[$url] = $title;
+      }
     }
+    if (isset($view_mode_options)) {
+      $form['preview_site'] = [
+        '#type' => 'select',
+        '#title' => $this->t('Preview Site'),
+        '#options' => $view_mode_options,
+      ];
 
-    $form['preview_site'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Preview Site'),
-      '#options' => $view_mode_options,
-    ];
+      $form['actions'] = [
+        '#type' => 'actions',
+      ];
+      $form['actions']['submit'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Preview'),
+      ];
 
-    $form['actions'] = [
-      '#type' => 'actions',
-    ];
-    $form['actions']['submit'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Preview'),
-    ];
-
-    $form['#attributes']['target'] = '_blank';
+      $form['#attributes']['target'] = '_blank';
+    }
 
     return $form;
   }

@@ -44,6 +44,7 @@ use Drupal\decoupled_preview\DpPreviewSiteInterface;
  *     "label",
  *     "url",
  *     "secret",
+ *     "content_type",
  *   }
  * )
  */
@@ -76,5 +77,25 @@ class DpPreviewSite extends ConfigEntityBase implements DpPreviewSiteInterface {
    * @var string
    */
   protected $secret;
+
+  /**
+   * The specific content type.
+   *
+   * @var array
+   */
+  protected $content_type;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function checkEnabledContentType($nodeType) {
+    $contentType = $this->get('content_type');
+    if (in_array($nodeType, array_values($contentType), TRUE) || empty(array_filter(array_values($contentType)))) {
+      return TRUE;
+    }
+    else {
+      return FALSE;
+    }
+  }
 
 }
