@@ -5,6 +5,6 @@ package: Decoupled
 core: 8.x
 core_version_requirement: ^8 || ^9
 dependencies:
-  - decoupled_router
-  - jsonapi_resources
+  - decoupled_router:decoupled_router
+  - jsonapi_resources:jsonapi_resources
 configure: entity.dp_preview_site.collection

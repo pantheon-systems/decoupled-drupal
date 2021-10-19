@@ -2,15 +2,43 @@
 
 namespace Drupal\decoupled_preview\Form;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Provides a Decoupled Preview form.
  */
 class EditPreviewForm extends FormBase {
+
+  /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
+   * Constructor for EditPreviewForm.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
+   */
+  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
+    $this->entityTypeManager = $entity_type_manager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('entity_type.manager')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -23,10 +51,9 @@ class EditPreviewForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $uuid = FALSE, $alias = NULL, $nid = FALSE) {
-    $entityTypeManager = \Drupal::entityTypeManager();
+    $entityTypeManager = $this->entityTypeManager;
     $storage = $entityTypeManager->getStorage('dp_preview_site');
-    $ids = \Drupal::entityQuery('dp_preview_site')->execute();
-    $sites = $storage->loadMultiple($ids);
+    $sites = $storage->loadMultiple();
     $nodeType = $entityTypeManager->getStorage('node')
       ->load($nid)
       ->bundle();
@@ -42,7 +69,7 @@ class EditPreviewForm extends FormBase {
             'query' => [
               'secret' => $secret,
               'slug' => $alias,
-              'key' => \Drupal::currentUser()->id() . '_' . $uuid,
+              'key' => $this->currentUser()->id() . '_' . $uuid,
             ],
           ];
         }
