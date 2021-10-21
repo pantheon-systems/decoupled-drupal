@@ -5,6 +5,7 @@ namespace Drupal\decoupled_preview\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Url;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\path_alias\AliasManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -86,6 +87,23 @@ class DecoupledPreviewController extends ControllerBase {
         '#type' => 'html_tag',
         '#tag' => 'p',
         '#value' => $this->t('Decoupled Preview has not been configured for this content type.'),
+      ];
+    }
+
+    if ($node_preview) {
+      $build['wrapper'] = [
+        '#type' => 'html_tag',
+        '#tag' => 'p',
+      ];
+      $build['container']['backlink'] = [
+        '#type' => 'link',
+        '#title' => $this->t('Back to content editing'),
+        '#url' => Url::fromRoute('entity.node.edit_form', ['node' => $node]),
+        '#options' => [
+          'query' => [
+            'uuid' => $node_preview,
+          ],
+        ],
       ];
     }
     return $build;
