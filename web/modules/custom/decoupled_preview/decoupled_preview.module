@@ -71,3 +71,14 @@ function _decoupled_preview_submit_decoupled_preview(array &$form, FormStateInte
 
   $form_state->setRedirect('decoupled_preview.preview', $route_parameters);
 }
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function decoupled_preview_preprocess_breadcrumb(&$variables) {
+  /** @var \Drupal\Core\Link $link */
+  $link = $variables['links'][2];
+  if (isset($link) && isset($variables['breadcrumb'][2]) && $variables['links'][2]->getUrl()->getRouteName() === 'decoupled_preview.preview') {
+    unset($variables['breadcrumb'][2]);
+  }
+}
