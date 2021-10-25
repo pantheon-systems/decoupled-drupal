@@ -5,7 +5,9 @@ namespace Drupal\decoupled_preview\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Access\AccessResult;
-use Drupal\node\Entity\Node;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\path_alias\AliasManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Returns responses for Decoupled Preview routes.
@@ -13,19 +15,54 @@ use Drupal\node\Entity\Node;
 class DecoupledPreviewController extends ControllerBase {
 
   /**
+   * The renderer.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  /**
+   * The path alias manager.
+   *
+   * @var \Drupal\path_alias\AliasManagerInterface
+   */
+  protected $aliasManager;
+
+  /**
+   * Constructs an DecoupledPreviewController object.
+   *
+   * @param \Drupal\Core\Render\RendererInterface $renderer
+   *   The renderer.
+   * @param \Drupal\path_alias\AliasManagerInterface $aliasManager
+   *   An alias manager to find the alias for the current node path.
+   */
+  public function __construct(RendererInterface $renderer, AliasManagerInterface $aliasManager) {
+    $this->renderer = $renderer;
+    $this->aliasManager = $aliasManager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('renderer'),
+      $container->get('path_alias.manager')
+    );
+  }
+
+  /**
    * Builds the response.
    */
   public function build($node, $node_preview = FALSE) {
     $markup = '';
 
-    $entityTypeManager = \Drupal::entityTypeManager();
-    $alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $node);
-    $storage = $entityTypeManager->getStorage('dp_preview_site');
-    $ids = \Drupal::entityQuery('dp_preview_site')->execute();
-    $sites = $storage->loadMultiple($ids);
-    $nodeType = $entityTypeManager->getStorage('node')
-      ->load($node)
-      ->bundle();
+    $storage = $this->entityTypeManager()->getStorage('dp_preview_site');
+    $sites = $storage->loadMultiple();
+    $nodeData = $this->entityTypeManager()->getStorage('node')
+      ->load($node);
+    $alias = $this->aliasManager->getAliasByPath('/node/' . $node);
+    $nodeType = $nodeData->bundle();
     $enablePreview = FALSE;
 
     foreach ($sites as $site) {
@@ -36,8 +73,7 @@ class DecoupledPreviewController extends ControllerBase {
 
     if ($enablePreview) {
       $previewForm = $this->formBuilder()->getForm('Drupal\decoupled_preview\Form\EditPreviewForm', $node_preview, $alias, $node);
-      $renderer = \Drupal::service('renderer');
-      $previewFormHtml = $renderer->render($previewForm);
+      $previewFormHtml = $this->renderer->render($previewForm);
       $markup .= $previewFormHtml;
 
       $build['content'] = [
@@ -59,7 +95,8 @@ class DecoupledPreviewController extends ControllerBase {
   /**
    * Custom access check to determine if preview local task should display.
    *
-   * @param $node
+   * @param int $node
+   *   The node id of the current preview.
    *
    * @return Drupal\Core\Access\AccessResult
    *   Indicates access if at least one site is enabled for the current content
@@ -69,15 +106,13 @@ class DecoupledPreviewController extends ControllerBase {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function isPreviewEnabled($node) {
-    $entity = Node::load($node);
+    $entity = $this->entityTypeManager()->getStorage('node')->load($node);
     $nodeType = $entity->getType();
 
     // A lot of this is copied from the build method. May be able to abstract
     // into a function.
-    $entityTypeManager = \Drupal::entityTypeManager();
-    $storage = $entityTypeManager->getStorage('dp_preview_site');
-    $ids = \Drupal::entityQuery('dp_preview_site')->execute();
-    $sites = $storage->loadMultiple($ids);
+    $storage = $this->entityTypeManager()->getStorage('dp_preview_site');
+    $sites = $storage->loadMultiple();
     $enablePreview = FALSE;
 
     foreach ($sites as $site) {

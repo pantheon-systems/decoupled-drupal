@@ -4,6 +4,8 @@ namespace Drupal\decoupled_preview\Form;
 
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteBuilderInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Preview Site form.
@@ -11,6 +13,32 @@ use Drupal\Core\Form\FormStateInterface;
  * @property \Drupal\decoupled_preview\DpPreviewSiteInterface $entity
  */
 class DpPreviewSiteForm extends EntityForm {
+
+  /**
+   * The route building service.
+   *
+   * @var \Drupal\Core\Routing\RouteBuilderInterface
+   */
+  protected $routeBuilder;
+
+  /**
+   * Constructor for DpPreviewSiteForm.
+   *
+   * @param \Drupal\Core\Routing\RouteBuilderInterface $route_builder
+   *   The route building service.
+   */
+  public function __construct(RouteBuilderInterface $route_builder) {
+    $this->routeBuilder = $route_builder;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('router.builder')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -88,7 +116,7 @@ class DpPreviewSiteForm extends EntityForm {
     $result = parent::save($form, $form_state);
     // Rebuilding the routes,
     // as this might add/remove the Decoupled Preview local task.
-    \Drupal::service('router.builder')->setRebuildNeeded();
+    $this->routeBuilder->setRebuildNeeded();
     $message_args = ['%label' => $this->entity->label()];
     $message = $result == SAVED_NEW
       ? $this->t('Created new preview site %label.', $message_args)

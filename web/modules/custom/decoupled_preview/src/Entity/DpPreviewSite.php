@@ -90,11 +90,16 @@ class DpPreviewSite extends ConfigEntityBase implements DpPreviewSiteInterface {
    */
   public function checkEnabledContentType($nodeType) {
     $contentType = $this->get('content_type');
-    if (in_array($nodeType, array_values($contentType), TRUE) || empty(array_filter(array_values($contentType)))) {
-      return TRUE;
+    if (!empty($contentType)) {
+      if (in_array($nodeType, array_values($contentType), TRUE) || empty(array_filter(array_values($contentType)))) {
+        return TRUE;
+      }
+      else {
+        return FALSE;
+      }
     }
     else {
-      return FALSE;
+      return TRUE;
     }
   }
 
