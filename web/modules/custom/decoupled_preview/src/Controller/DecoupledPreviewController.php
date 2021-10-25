@@ -6,6 +6,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\path_alias\AliasManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -21,13 +22,23 @@ class DecoupledPreviewController extends ControllerBase {
   protected $renderer;
 
   /**
+   * The path alias manager.
+   *
+   * @var \Drupal\path_alias\AliasManagerInterface
+   */
+  protected $aliasManager;
+
+  /**
    * Constructs an DecoupledPreviewController object.
    *
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The renderer.
+   * @param \Drupal\path_alias\AliasManagerInterface $aliasManager
+   *   An alias manager to find the alias for the current node path.
    */
-  public function __construct(RendererInterface $renderer) {
+  public function __construct(RendererInterface $renderer, AliasManagerInterface $aliasManager) {
     $this->renderer = $renderer;
+    $this->aliasManager = $aliasManager;
   }
 
   /**
@@ -35,7 +46,8 @@ class DecoupledPreviewController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('renderer')
+      $container->get('renderer'),
+      $container->get('path_alias.manager')
     );
   }
 
@@ -49,7 +61,7 @@ class DecoupledPreviewController extends ControllerBase {
     $sites = $storage->loadMultiple();
     $nodeData = $this->entityTypeManager()->getStorage('node')
       ->load($node);
-    $alias = $nodeData->toUrl()->toString();
+    $alias = $this->aliasManager->getAliasByPath('/node/' . $node);
     $nodeType = $nodeData->bundle();
     $enablePreview = FALSE;
 
