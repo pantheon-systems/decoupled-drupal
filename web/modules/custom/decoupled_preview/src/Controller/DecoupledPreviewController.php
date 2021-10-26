@@ -95,7 +95,7 @@ class DecoupledPreviewController extends ControllerBase {
         '#type' => 'html_tag',
         '#tag' => 'p',
       ];
-      $build['container']['backlink'] = [
+      $build['wrapper']['backlink'] = [
         '#type' => 'link',
         '#title' => $this->t('Back to content editing'),
         '#url' => Url::fromRoute('entity.node.edit_form', ['node' => $node]),
