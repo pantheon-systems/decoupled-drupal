@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * @file
+ * Pantheon Decoupled Example module file.
+ */
+
+use Drupal\Core\File\FileSystemInterface;
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements hook_modules_installed().
+ */
+function pantheon_decoupled_example_modules_installed($modules, $is_syncing) {
+  if (in_array('pantheon_decoupled_example', $modules)) {
+    /** @var \Drupal\Core\File\FileSystemInterface $fileSystem */
+    $fileSystem = \Drupal::service('file_system');
+    $uri = $fileSystem->copy(
+      \Drupal::service('module_handler')->getModule('pantheon_decoupled_example')->getPath() . '/content/image/RickAndMorty.png',
+      'public://RickAndMorty.png',
+      FileSystemInterface::EXISTS_REPLACE,
+    );
+    $file = \Drupal::entityTypeManager()->getStorage('file')->create([
+      'uri' => $uri,
+      'status' => 1,
+    ]);
+    $file->setPermanent();
+    $file->save();
+    $exampleNode = \Drupal::entityTypeManager()
+      ->getStorage('node')
+      ->loadByProperties(['uuid' => '93620c4c-1b6d-48a8-a14b-bf9822ff5bc0']);
+    if (isset($exampleNode)) {
+      $node = Node::load(array_keys($exampleNode)[0]);
+      $node->set('field_image', [
+        'target_id' => $file->id(),
+        'alt' => 'RickAndMorty',
+      ]);
+      $node->save();
+    }
+  }
+}

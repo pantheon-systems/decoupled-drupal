@@ -1,0 +1,11 @@
+name: Pantheon Decoupled Example
+type: module
+description: Import the content for the Pantheon decoupled profile.
+package: Custom
+core: 8.x
+core_version_requirement: ^8 || ^9
+dependencies:
+  - default_content
+default_content:
+  node:
+    - 93620c4c-1b6d-48a8-a14b-bf9822ff5bc0

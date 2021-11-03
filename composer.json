@@ -23,6 +23,7 @@
         "drupal/core-composer-scaffold": "^9",
         "drupal/core-recommended": "^8.8 || ^9",
         "drupal/decoupled_preview": "*",
+        "drupal/default_content": "^2.0@alpha",
         "drupal/environment_indicator": "^4.0",
         "drupal/gin": "^3.0@alpha",
         "drupal/pantheon_advanced_page_cache": "^1.2",
