@@ -1,0 +1,6 @@
+name: Pantheon Decoupled
+type: module
+description: Customization for Pantheon's Decoupled Demo.
+package: Custom
+core: 8.x
+core_version_requirement: ^8 || ^9
