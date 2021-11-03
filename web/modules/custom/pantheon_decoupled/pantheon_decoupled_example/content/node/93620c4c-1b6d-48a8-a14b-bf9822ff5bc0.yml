@@ -5,7 +5,7 @@ _meta:
   bundle: article
   default_langcode: en
   depends:
-    9590b12d-818a-48f2-8558-033debc7e6ce: file
+    86f89130-29e8-4df3-917b-fedc7f2100e9: file
 default:
   revision_uid:
     -
@@ -44,14 +44,14 @@ default:
     -
       status: 2
       cid: 0
-      last_comment_timestamp: 1635928870
+      last_comment_timestamp: 1635943934
       last_comment_name: ''
       last_comment_uid: 1
       comment_count: 0
   field_image:
     -
-      entity: 9590b12d-818a-48f2-8558-033debc7e6ce
-      alt: 'Lorem ipsum'
-      title: 'Dolor sit amet'
+      entity: 86f89130-29e8-4df3-917b-fedc7f2100e9
+      alt: RickAndMorty
+      title: ''
       width: 640
       height: 360
