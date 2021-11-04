@@ -6,13 +6,13 @@ _meta:
 default:
   filename:
     -
-      value: RickAndMorty.png
+      value: pizza.jpg
   uri:
     -
-      value: 'public://RickAndMorty.png'
+      value: 'public://pizza.jpg'
   filemime:
     -
-      value: image/png
+      value: image/jpg
   filesize:
     -
       value: 314587
