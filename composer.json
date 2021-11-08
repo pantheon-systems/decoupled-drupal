@@ -11,6 +11,10 @@
         {
             "type": "path",
             "url": "web/modules/custom/decoupled_preview"
+        },
+        {
+            "type": "path",
+            "url": "web/modules/custom/pantheon_decoupled"
         }
     ],
     "require": {
@@ -23,10 +27,10 @@
         "drupal/core-composer-scaffold": "^9",
         "drupal/core-recommended": "^8.8 || ^9",
         "drupal/decoupled_preview": "*",
-        "drupal/default_content": "^2.0@alpha",
         "drupal/environment_indicator": "^4.0",
         "drupal/gin": "^3.0@alpha",
         "drupal/pantheon_advanced_page_cache": "^1.2",
+        "drupal/pantheon_decoupled": "*",
         "drupal/redis": "^1.5",
         "drush-ops/behat-drush-endpoint": "^9.3",
         "drush/drush": "^10.5",

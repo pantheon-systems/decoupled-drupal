@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b4338bbc39201b9ebcabd7a80bfae659",
+    "content-hash": "20d2dae77480a15c9b673e57849f10eb",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2478,6 +2478,47 @@
             "homepage": "https://www.drupal.org/project/pantheon_advanced_page_cache",
             "support": {
                 "source": "https://git.drupalcode.org/project/pantheon_advanced_page_cache"
+            }
+        },
+        {
+            "name": "drupal/pantheon_decoupled",
+            "version": "dev-DB-1028",
+            "dist": {
+                "type": "path",
+                "url": "web/modules/custom/pantheon_decoupled",
+                "reference": "d47bae307f7419d5619a05f81e31c02e5542f98a"
+            },
+            "require": {
+                "drupal/default_content": "^2.0@alpha"
+            },
+            "type": "drupal-module",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Your name here",
+                    "homepage": "https://www.drupal.org/u/your_name_here",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://www.drupal.org/node/NID/committers",
+                    "role": "Contributors"
+                }
+            ],
+            "description": "Customization for Pantheon's Decoupled Sites.",
+            "homepage": "https://www.drupal.org/project/decoupled_preview",
+            "keywords": [
+                "Drupal",
+                "decoupled"
+            ],
+            "support": {
+                "issues": "https://www.drupal.org/project/issues/decoupled_preview",
+                "source": "http://cgit.drupalcode.org/decoupled_preview"
+            },
+            "transport-options": {
+                "relative": true
             }
         },
         {
@@ -11012,8 +11053,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "drupal/default_content": 15,
-        "drupal/gin": 15
+        "drupal/gin": 15,
+        "drupal/pantheon_decoupled": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
@@ -11024,5 +11065,5 @@
     "platform-overrides": {
         "php": "7.3"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }
