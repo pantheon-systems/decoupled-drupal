@@ -18,7 +18,7 @@ default:
       target_id: 1
   title:
     -
-      value: 'This is an Example Content'
+      value: 'This is an Example Article'
   created:
     -
       value: 1635928832
