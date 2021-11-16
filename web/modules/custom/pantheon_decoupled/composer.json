@@ -5,7 +5,8 @@
     "type": "drupal-module",
     "license": "GPL-2.0+",
     "require": {
-        "drupal/default_content": "^2.0@alpha"
+        "drupal/default_content": "^2.0@alpha",
+        "drupal/simple_oauth": "^5"
     },
     "homepage": "https://www.drupal.org/project/decoupled_preview",
     "authors": [
