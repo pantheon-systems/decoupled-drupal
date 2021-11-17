@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for pantheon_decoupled.
+ */
+
+use Drupal\consumers\Entity\Consumer;
+use Drupal\user\Entity\User;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_install().
+ */
+function pantheon_decoupled_install() {
+  // @todo consider auto-generating keys.
+  // See Drupal\simple_oauth\Service\KeyGeneratorService.
+  // Create example user to be used with example consumer.
+  $user = User::create();
+  $password = \Drupal::service('password_generator')->generate();
+  $user->setPassword($password);
+  $user->enforceIsNew();
+  $user->setEmail("pantheon_decoupled@example.com");
+  $user->setUsername("pantheon_decoupled");
+  $user->addRole('pantheon_decoupled');
+  $user->set("status", 1);
+  $user->save();
+
+  // @todo refactor to use use dependency injection.
+  $client_secret = \Drupal::service('password_generator')->generate(16);
+  $consumer = Consumer::create([
+    'label' => 'Example Consumer',
+    'description' => 'This is an example consumer for Pantheon\'s Decoupled Starter Kit. This was created programmatically when the pantheon_decoupled module was first installed. Feel free to edit, or delete this.',
+    'user_id' => $user->id(),
+    'secret' => $client_secret,
+    'roles' => ['pantheon_decoupled'],
+  ]);
+  $consumer->save();
+  $client_id = $consumer->uuid();
+
+  \Drupal::messenger()->addWarning(t('Pantheon Decoupled Post Installation Steps:'));
+  \Drupal::messenger()->addWarning(t('1. Add the following to the .env file in your JavaScript application:'));
+  \Drupal::messenger()->addWarning(t('client_id: %client_id', ['%client_id' => $client_id]));
+  \Drupal::messenger()->addWarning(t('client_secret: %client_secret', ['%client_secret' => $client_secret]));
+  $url = Url::fromUri('base:/admin/config/people/simple_oauth')->toString();
+  // Creating a URL during install injects the installer path for some reason.
+  $url = str_replace('/core/install.php', '', $url);
+  \Drupal::messenger()->addWarning(t('2. Generate a key pair within the <a href=@link>Simple OAuth settings</a>.', ['@link' => $url]));
+  \Drupal::messenger()->addWarning(t('3. The user pantheon_decoupled was created with the password %password. Please update this account accordingly.', ['%password' => $password]));
+}
