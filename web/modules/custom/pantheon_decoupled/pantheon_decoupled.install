@@ -40,8 +40,8 @@ function pantheon_decoupled_install() {
 
   \Drupal::messenger()->addWarning(t('Pantheon Decoupled Post Installation Steps:'));
   \Drupal::messenger()->addWarning(t('1. Add the following to the .env file in your JavaScript application:'));
-  \Drupal::messenger()->addWarning(t('client_id: %client_id', ['%client_id' => $client_id]));
-  \Drupal::messenger()->addWarning(t('client_secret: %client_secret', ['%client_secret' => $client_secret]));
+  \Drupal::messenger()->addWarning(t('CLIENT_ID=%client_id', ['%client_id' => $client_id]));
+  \Drupal::messenger()->addWarning(t('CLIENT_SECRET=%client_secret', ['%client_secret' => $client_secret]));
   $url = Url::fromUri('base:/admin/config/people/simple_oauth')->toString();
   // Creating a URL during install injects the installer path for some reason.
   $url = str_replace('/core/install.php', '', $url);
