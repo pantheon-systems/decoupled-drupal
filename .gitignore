@@ -117,6 +117,3 @@ Thumbs.db
 
 # VS Code Settings
 .vscode/settings.json
-
-# Sensitive files
-private/*.key
