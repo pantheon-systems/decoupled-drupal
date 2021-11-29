@@ -7,3 +7,5 @@ use_implicit: false
 disable_openid_connect: false
 _core:
   default_config_hash: KsPFWSp6mgXIQgjBJEShfKUGn6VLRlbpIJ2EysXvXWM
+public_key: sites/default/files/private/public.key
+private_key: sites/default/files/private/private.key
