@@ -9,6 +9,7 @@ use Drupal\Core\Url;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\path_alias\AliasManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Returns responses for Decoupled Preview routes.
@@ -30,16 +31,26 @@ class DecoupledPreviewController extends ControllerBase {
   protected $aliasManager;
 
   /**
+   * The Symfony Request Stack.
+   *
+   * @var \Symfony\Component\HttpFoundation\Request
+   */
+  protected $request;
+
+  /**
    * Constructs an DecoupledPreviewController object.
    *
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The renderer.
    * @param \Drupal\path_alias\AliasManagerInterface $aliasManager
    *   An alias manager to find the alias for the current node path.
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The Symfony Request Stack.
    */
-  public function __construct(RendererInterface $renderer, AliasManagerInterface $aliasManager) {
+  public function __construct(RendererInterface $renderer, AliasManagerInterface $aliasManager, Request $request) {
     $this->renderer = $renderer;
     $this->aliasManager = $aliasManager;
+    $this->request = $request;
   }
 
   /**
@@ -48,7 +59,8 @@ class DecoupledPreviewController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('renderer'),
-      $container->get('path_alias.manager')
+      $container->get('path_alias.manager'),
+      $container->get('request_stack')->getCurrentRequest()
     );
   }
 
@@ -71,9 +83,10 @@ class DecoupledPreviewController extends ControllerBase {
         $enablePreview = TRUE;
       }
     }
-
+    $resourceVersionId = FALSE;
     if ($enablePreview) {
-      $previewForm = $this->formBuilder()->getForm('Drupal\decoupled_preview\Form\EditPreviewForm', $node_preview, $alias, $node);
+      $resourceVersionId = $this->request->get('resourceVersionId');
+      $previewForm = $this->formBuilder()->getForm('Drupal\decoupled_preview\Form\EditPreviewForm', $node_preview, $alias, $node, $resourceVersionId);
       $previewFormHtml = $this->renderer->render($previewForm);
       $markup .= $previewFormHtml;
 
@@ -105,6 +118,11 @@ class DecoupledPreviewController extends ControllerBase {
           ],
         ],
       ];
+      if ($resourceVersionId) {
+        $build['wrapper']['backlink']['#title'] = $this->t('Back to revisions listing');
+        $build['wrapper']['backlink']['#url'] = Url::fromRoute('entity.node.version_history', ['node' => $node]);
+        $build['wrapper']['backlink']['#options']['query'] = [];
+      }
     }
     return $build;
 

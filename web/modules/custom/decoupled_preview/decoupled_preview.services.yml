@@ -1,0 +1,5 @@
+services:
+  decoupled_preview.route_subscriber:
+    class: Drupal\decoupled_preview\EventSubscriber\DecoupledPreviewRouteSubscriber
+    tags:
+      - { name: event_subscriber }
