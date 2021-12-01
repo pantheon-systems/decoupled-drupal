@@ -50,7 +50,7 @@ class EditPreviewForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $uuid = FALSE, $alias = NULL, $nid = FALSE) {
+  public function buildForm(array $form, FormStateInterface $form_state, $uuid = FALSE, $alias = NULL, $nid = FALSE, $resourceVersionId = FALSE) {
     $entityTypeManager = $this->entityTypeManager;
     $storage = $entityTypeManager->getStorage('dp_preview_site');
     $sites = $storage->loadMultiple();
