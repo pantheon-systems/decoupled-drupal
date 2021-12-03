@@ -50,4 +50,4 @@ decoupled_preview.preview_resource:
   requirements:
     # The same route requirements for any route definition may also be used
     # by a JSON:API resource route.
-    _permission: 'access content dp_preview_site'
+    _permission: 'administer dp_preview_site'
