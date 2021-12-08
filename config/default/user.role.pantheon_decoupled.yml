@@ -11,3 +11,4 @@ is_admin: null
 permissions:
   - 'administer dp_preview_site'
   - 'administer taxonomy'
+  - 'view all revisions'
