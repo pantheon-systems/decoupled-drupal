@@ -21,7 +21,6 @@
 
 # Ignore scaffold files
 .drush-lock-update
-.gitattributes
 web/.eslintrc.json
 web/INSTALL.txt
 web/README.txt
@@ -31,7 +30,9 @@ web/.editorconfig
 web/.eslintignore
 web/.eslintrc
 web/.htaccess
+web/.gitignore
 web/.ht.router.php
+web/.gitattributes
 web/autoload.php
 web/index.php
 web/robots.txt
