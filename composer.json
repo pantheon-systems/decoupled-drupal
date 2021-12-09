@@ -1,12 +1,16 @@
 {
-    "name": "pantheon-systems/example-drops-8-composer",
-    "description": "Install drops-8 with Composer on Pantheon.",
+    "name": "lcatlett/decoupled-drupal-project",
+    "description": "Install Decoupled Drupal 9 with Composer on Pantheon.",
     "type": "project",
     "license": "MIT",
     "repositories": [
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "path",
+            "url": "upstream-configuration"
         },
         {
             "type": "path",
@@ -18,42 +22,17 @@
         }
     ],
     "require": {
-        "php": ">=7.3",
-        "composer/installers": "^1.8",
-        "cweagans/composer-patches": "^1.0",
+        "pantheon-upstreams/upstream-configuration": "*",
+        "drush/drush": "^10",
         "drupal/admin_toolbar": "^3.0",
         "drupal/coffee": "^1.2",
         "drupal/config_split": "^1.7",
-        "drupal/core-composer-scaffold": "^9",
-        "drupal/core-recommended": "^8.8 || ^9",
         "drupal/decoupled_preview": "*",
         "drupal/environment_indicator": "^4.0",
         "drupal/gin": "^3.0@alpha",
         "drupal/pantheon_advanced_page_cache": "^1.2",
         "drupal/pantheon_decoupled": "*",
-        "drupal/redis": "^1.5",
-        "drush-ops/behat-drush-endpoint": "^9.3",
-        "drush/drush": "^10.5",
-        "pantheon-systems/drupal-integrations": "^8 || ^9",
-        "pantheon-systems/quicksilver-pushback": "^2",
-        "zaporylie/composer-drupal-optimizations": "^1.2"
-    },
-    "require-dev": {
-        "behat/behat": "^3.1",
-        "behat/mink": "^1.7",
-        "behat/mink-extension": "^2.2",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
-        "dmore/behat-chrome-extension": "^1.3",
-        "drupal/coder": "^8.3.1",
-        "drupal/devel": "^4.1",
-        "drupal/drupal-driver": "^2.1",
-        "drupal/drupal-extension": "^4.1",
-        "genesis/behat-fail-aid": "^2.1",
-        "jcalderonzumba/mink-phantomjs-driver": "^0.3.1",
-        "mikey179/vfsstream": "^1.2",
-        "phpunit/phpunit": "^6.5",
-        "squizlabs/php_codesniffer": "^3.4.0",
-        "symfony/css-selector": "^2.8"
+        "drupal/redis": "^1.5"
     },
     "conflict": {
             "drupal/drupal": "*"
@@ -70,25 +49,11 @@
             "@prepare-for-pantheon",
             "composer install --optimize-autoloader --no-dev"
         ],
-        "lint": "find web/modules/custom web/themes/custom -name '*.php' -exec php -l {} \\;",
-        "code-sniff": [
-            "./vendor/bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md --ignore=node_modules,bower_components,vendor ./web/modules/custom",
-            "./vendor/bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md --ignore=node_modules,bower_components,vendor ./web/themes/custom",
-            "./vendor/bin/phpcs --standard=DrupalPractice --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md --ignore=node_modules,bower_components,vendor ./web/modules/custom",
-            "./vendor/bin/phpcs --standard=DrupalPractice --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md --ignore=node_modules,bower_components,vendor ./web/themes/custom"
-        ],
-        "unit-test": "echo 'No unit test step defined.'",
         "prepare-for-pantheon": "DrupalProject\\composer\\ScriptHandler::prepareForPantheon",
         "post-install-cmd": [
             "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
             "cp git-hooks\/* .git\/hooks",
             "chmod +x .git\/hooks"
-        ],
-        "post-update-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
-        ],
-        "post-create-project-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
         ]
     },
     "extra": {
@@ -103,14 +68,18 @@
         },
         "patches": {
             "drupal/core": {
-                "1356276#656: Allow profiles to define a base/parent profile": "https://www.drupal.org/files/issues/2021-06-29/D91x_AND_D93x-1356276-656.patch"
+                "1356276#675: Allow profiles to define a base/parent profile": "https://www.drupal.org/files/issues/2021-11-18/1356276-675.patch"
             }
         },
         "build-env": {
             "install-cms": [
-                "drush site-install umami --account-mail={account-mail} --account-name={account-name} --account-pass={account-pass} --site-mail={site-mail} --site-name={site-name} --yes"
+                "drush site-install pantheon_decoupled_umami_demo --account-mail={account-mail} --account-name={account-name} --account-pass={account-pass} --site-mail={site-mail} --site-name={site-name} --yes"
             ],
             "export-configuration": "drush config-export --yes"
+        },
+        "composer-exit-on-patch-failure": true,
+        "patchLevel": {
+            "drupal/core": "-p2"
         },
         "drupal-scaffold": {
             "allowed-packages": [
@@ -120,16 +89,17 @@
                 "web-root": "./web"
             },
             "file-mapping": {
-                "[project-root]/.editorconfig": false
+                "[project-root]/.editorconfig": false,
+                "[project-root]/pantheon.upstream.yml": false,
+                "[project-root]/.gitattributes": false
             }
         }
     },
     "config": {
-        "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
         "platform": {
-            "php": "7.3"
+            "php": "7.4"
         }
     }
 }
