@@ -72,6 +72,9 @@ class EditPreviewForm extends FormBase {
               'key' => $this->currentUser()->id() . '_' . $uuid,
             ],
           ];
+          if ($resourceVersionId) {
+            $options['query']['resourceVersionId'] = $resourceVersionId;
+          }
         }
         else {
           $options = [
