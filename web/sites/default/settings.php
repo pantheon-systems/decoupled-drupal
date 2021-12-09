@@ -35,9 +35,9 @@ if (file_exists($local_settings)) {
 
 
 /**
- * If there is a demo settings file, then include it
+ * If there is a decoupled settings file, then include it
  */
-$demo_settings = __DIR__ . "/demo.settings.php";
-if (file_exists($demo_settings)) {
-  include $demo_settings;
+$decoupled_settings = __DIR__ . "/decoupled.settings.php";
+if (file_exists($decoupled_settings)) {
+  include $decoupled_settings;
 }
