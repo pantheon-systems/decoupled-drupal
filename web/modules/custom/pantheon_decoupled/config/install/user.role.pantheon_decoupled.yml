@@ -7,4 +7,5 @@ weight: 5
 is_admin: null
 permissions:
   - 'administer taxonomy'
+  - 'view all revisions'
   - 'administer dp_preview_site'
