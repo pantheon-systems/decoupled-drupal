@@ -1,9 +1,7 @@
-name: demo-decoupled-bridge
+name: decoupled-drupal
 recipe: pantheon
 config:
   framework: drupal9
-  site: demo-decoupled-bridge
-  id: 012f039b-c885-4391-a277-1968da264cae
 services:
   appserver:
     xdebug: false
