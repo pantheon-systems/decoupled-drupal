@@ -32,7 +32,7 @@ coding_standard_error=0
 
 # Check for PHP syntax
 # List php files added to commit
-php_files_changed=`git diff-index --diff-filter=ACMRT --cached --name-only HEAD -- | egrep '\.php$|\.inc$|\.module|\.theme$'`
+php_files_changed=`git diff-index --diff-filter=ACMRT --cached --name-only HEAD -- | egrep -v $exclude_dir_and_ext | egrep '\.php$|\.inc$|\.module|\.theme$'`
 if [ -n "$php_files_changed" ]
 then
   for FILE in $php_files_changed; do
