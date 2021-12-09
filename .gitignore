@@ -22,7 +22,6 @@
 # Ignore scaffold files
 .drush-lock-update
 .gitattributes
-pantheon.upstream.yml
 web/.eslintrc.json
 web/INSTALL.txt
 web/README.txt
