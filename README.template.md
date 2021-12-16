@@ -1,16 +1,13 @@
-%SITE_NAME% on Pantheon
-
 This repository is a reference implementation and start state for a modern Drupal 9 workflow utilizing [Composer](https://getcomposer.org/), Continuous Integration (CI), Automated Testing, and Pantheon. It uses CircleCI for continuous integration and includes sane defaults for an enterprise Drupal 9 site. This includes default settings, utility modules with default configuration, environment-specific configuration via Config Split, Quicksilver automation scripts, local development tooling, and basic tests.
 
 ## Quickstart
 1. Clone this repo:
 ```
-git clone git@github.com:pantheon-systems/%SITE_NAME%.git
+git clone git@github.com:%GH_ORG%/%SITE_NAME%.git
 ```
 2. Install composer dependencies:
 ```
 cd <your repo> && composer install
-```
 ```
 3. Start local development environment:
 ```
@@ -51,9 +48,11 @@ Decoupled preview can be configured at admin/structure/dp-preview-site
 (Structure -> Preview Sites.)
 
 Local config includes a preview site for a local NextJS instance. The preview secret
-must be set manually. Or alternatively it can be overridden in settings.local.php
+must be set manually. Or alternatively it can be overridden in `settings.local.php`:
 
+```
 $config['decoupled_preview.dp_preview_site.nextjs_demo']['secret'] = 'mysecret';
+```
 
 After configuring decoupled preview, a preview link will display on the preview
 tab for all nodes.
@@ -67,7 +66,10 @@ Pantheon will serve the site from the `/web` subdirectory due to the configurati
 
 #### `/config`
 
-One of the directories moved to the git root is `/config`. This directory holds Drupal's `.yml` configuration files. In more traditional repo structure these files would live at `/sites/default/config/`.
+One of the directories moved to the git root is `/config/default`. This directory holds Drupal's `.yml` configuration files. In more traditional repo structure these files would live at `/sites/default/config/`.
+
+Config Split has been pre-configured to support environment-specific configuration. This means that you can have different configuration for different environments such as local, ci, dev, test, and live. This configuration stored in the respective environment directories at `/config/envs/env-name`. Read more about config split in the [Config Split documentation](https://www.drupal.org/docs/contributed-modules/configuration-split/).
+
 ### `composer.json`
 This project uses Composer to manage third-party PHP dependencies.
 
@@ -96,8 +98,6 @@ The following optional dependencies are also included as suggestions:
 - **cweagans/composer-patches**: Allows a site to be altered with patch files at installation time.
 
 - **drush-ops/behat-drush-endpoint**: Used by Behat tests.
-
-- **rvtraveller/qs-composer-installer**: Allows a site to install quicksilver hooks from a Composer package.
 
 - **zaporylie/composer-drupal-optimizations**: This package makes `composer update` operations run more quickly when updating Drupal and Drupal's dependencies.
 
