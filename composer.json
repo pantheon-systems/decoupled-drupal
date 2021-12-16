@@ -1,112 +1,137 @@
 {
-    "name": "lcatlett/decoupled-drupal-project",
-    "description": "Install Decoupled Drupal 9 with Composer on Pantheon.",
-    "type": "project",
-    "license": "MIT",
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packages.drupal.org/8"
-        },
-        {
-            "type": "path",
-            "url": "upstream-configuration"
-        },
-        {
-            "type": "path",
-            "url": "web/modules/custom/decoupled_preview"
-        },
-        {
-            "type": "path",
-            "url": "web/modules/custom/pantheon_decoupled"
-        }
-    ],
-    "require": {
-        "pantheon-upstreams/upstream-configuration": "*",
-        "drush/drush": "^10",
-        "drupal/admin_toolbar": "^3.0",
-        "drupal/coffee": "^1.2",
-        "drupal/config_split": "^1.7",
-        "drupal/decoupled_preview": "*",
-        "drupal/environment_indicator": "^4.0",
-        "drupal/gin": "^3.0@alpha",
-        "drupal/pantheon_advanced_page_cache": "^1.2",
-        "drupal/pantheon_decoupled": "*",
-        "drupal/redis": "^1.5"
+  "name": "lcatlett/decoupled-drupal-project",
+  "description": "Install Decoupled Drupal 9 with Composer on Pantheon.",
+  "type": "project",
+  "license": "MIT",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
     },
-    "conflict": {
-            "drupal/drupal": "*"
+    {
+      "type": "path",
+      "url": "upstream-configuration"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "autoload": {
-        "classmap": [
-            "scripts/composer/ScriptHandler.php"
-        ]
+    {
+      "type": "path",
+      "url": "web/modules/custom/decoupled_preview"
     },
-    "scripts": {
-        "build-assets": [
-            "@prepare-for-pantheon",
-            "composer install --optimize-autoloader --no-dev"
-        ],
-        "prepare-for-pantheon": "DrupalProject\\composer\\ScriptHandler::prepareForPantheon",
-        "post-install-cmd": [
-            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-            "cp git-hooks\/* .git\/hooks",
-            "chmod +x .git\/hooks"
-        ]
-    },
-    "extra": {
-        "installer-paths": {
-            "web/core": ["type:drupal-core"],
-            "web/libraries/{$name}": ["type:drupal-library"],
-            "web/modules/contrib/{$name}": ["type:drupal-module"],
-            "web/profiles/contrib/{$name}": ["type:drupal-profile"],
-            "web/themes/contrib/{$name}": ["type:drupal-theme"],
-            "drush/Commands/contrib/{$name}": ["type:drupal-drush"],
-            "web/private/scripts/quicksilver/{$name}/": ["type:quicksilver-script"]
-        },
-        "patches": {
-            "drupal/core": {
-<<<<<<< HEAD
-                "1356276#656: Allow profiles to define a base/parent profile": "https://www.drupal.org/files/issues/2021-06-29/D91x_AND_D93x-1356276-656.patch"
-            },
-            "drupal/decoupled_router": {
-                "3111456#34: Unable to resolve path on node in other language than default": "https://www.drupal.org/files/issues/2021-05-05/3111456-34.patch"
-=======
-                "1356276#675: Allow profiles to define a base/parent profile": "https://www.drupal.org/files/issues/2021-11-18/1356276-675.patch"
->>>>>>> e3823f0f (DB-1092: Refactor composer defaults to use upstream scaffolding.)
-            }
-        },
-        "build-env": {
-            "install-cms": [
-                "drush site-install pantheon_decoupled_umami_demo --account-mail={account-mail} --account-name={account-name} --account-pass={account-pass} --site-mail={site-mail} --site-name={site-name} --yes"
-            ],
-            "export-configuration": "drush config-export --yes"
-        },
-        "composer-exit-on-patch-failure": true,
-        "patchLevel": {
-            "drupal/core": "-p2"
-        },
-        "drupal-scaffold": {
-            "allowed-packages": [
-                "pantheon-systems/drupal-integrations"
-            ],
-            "locations": {
-                "web-root": "./web"
-            },
-            "file-mapping": {
-                "[project-root]/.editorconfig": false,
-                "[project-root]/pantheon.upstream.yml": false,
-                "[project-root]/.gitattributes": false
-            }
-        }
-    },
-    "config": {
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "platform": {
-            "php": "7.4"
-        }
+    {
+      "type": "path",
+      "url": "web/modules/custom/pantheon_decoupled"
     }
+  ],
+  "require": {
+    "pantheon-upstreams/upstream-configuration": "*",
+    "composer/installers": "^1.9",
+    "drupal/core-composer-scaffold": "^9.2",
+    "drupal/core-recommended": "^9.2",
+    "pantheon-systems/drupal-integrations": "^9",
+    "cweagans/composer-patches": "^1.7",
+    "drush/drush": "^10",
+    "drupal/admin_toolbar": "^3.0",
+    "drupal/coffee": "^1.2",
+    "drupal/config_split": "^1.7",
+    "drupal/decoupled_preview": "*",
+    "drupal/environment_indicator": "^4.0",
+    "drupal/gin": "^3.0@alpha",
+    "drupal/pantheon_advanced_page_cache": "^1.2",
+    "drupal/pantheon_decoupled": "*",
+    "drupal/redis": "^1.5"
+  },
+  "conflict": {
+    "drupal/drupal": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "classmap": [
+      "scripts/composer/ScriptHandler.php"
+    ]
+  },
+  "scripts": {
+    "build-assets": [
+      "@prepare-for-pantheon",
+      "composer install --optimize-autoloader --no-dev"
+    ],
+    "project-tasks": [
+      "./scripts/composer/project-tasks"
+    ],
+    "prepare-for-pantheon": "DrupalProject\\composer\\ScriptHandler::prepareForPantheon",
+    "post-install-cmd": [
+      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
+      "cp git-hooks/* .git/hooks",
+      "chmod +x .git/hooks",
+      "@project-tasks"
+    ],
+    "post-update-cmd": [
+      "@project-tasks"
+    ],
+    "post-create-project-cmd": [
+      "@project-tasks"
+    ]
+  },
+  "extra": {
+    "installer-paths": {
+      "web/core": [
+        "type:drupal-core"
+      ],
+      "web/libraries/{$name}": [
+        "type:drupal-library"
+      ],
+      "web/modules/contrib/{$name}": [
+        "type:drupal-module"
+      ],
+      "web/profiles/contrib/{$name}": [
+        "type:drupal-profile"
+      ],
+      "web/themes/contrib/{$name}": [
+        "type:drupal-theme"
+      ],
+      "drush/Commands/contrib/{$name}": [
+        "type:drupal-drush"
+      ],
+      "web/private/scripts/quicksilver/{$name}/": [
+        "type:quicksilver-script"
+      ]
+    },
+    "patches": {
+      "drupal/core": {
+        "1356276#675: Allow profiles to define a base/parent profile": "https://www.drupal.org/files/issues/2021-11-18/1356276-675.patch"
+      },
+      "drupal/decoupled_router": {
+        "3111456#34: Unable to resolve path on node in other language than default": "https://www.drupal.org/files/issues/2021-05-05/3111456-34.patch"
+      }
+    },
+    "build-env": {
+      "install-cms": [
+        "drush site-install pantheon_decoupled_umami_demo --account-mail={account-mail} --account-name={account-name} --account-pass={account-pass} --site-mail={site-mail} --site-name={site-name} --yes"
+      ],
+      "export-configuration": "drush config-export --yes"
+    },
+    "composer-exit-on-patch-failure": true,
+    "patchLevel": {
+      "drupal/core": "-p2"
+    },
+    "drupal-scaffold": {
+      "allowed-packages": [
+        "pantheon-systems/drupal-integrations"
+      ],
+      "locations": {
+        "web-root": "./web"
+      },
+      "file-mapping": {
+        "[project-root]/.editorconfig": false,
+        "[project-root]/pantheon.upstream.yml": false,
+        "[project-root]/.gitattributes": false
+      }
+    }
+  },
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "platform": {
+      "php": "7.4"
+    }
+  }
 }

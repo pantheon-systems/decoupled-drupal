@@ -11,16 +11,13 @@ use Composer\Script\Event;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
-class ScriptHandler
-{
+class ScriptHandler {
 
-  protected static function getDrupalRoot($project_root)
-  {
+  protected static function getDrupalRoot($project_root) {
     return $project_root .  '/web';
   }
 
-  public static function createRequiredFiles(Event $event)
-  {
+  public static function createRequiredFiles(Event $event) {
     $fs = new Filesystem();
     $root = static::getDrupalRoot(getcwd());
 
@@ -32,9 +29,9 @@ class ScriptHandler
 
     // Required for unit testing
     foreach ($dirs as $dir) {
-      if (!$fs->exists($root . '/'. $dir)) {
-        $fs->mkdir($root . '/'. $dir);
-        $fs->touch($root . '/'. $dir . '/.gitkeep');
+      if (!$fs->exists($root . '/' . $dir)) {
+        $fs->mkdir($root . '/' . $dir);
+        $fs->touch($root . '/' . $dir . '/.gitkeep');
       }
     }
 
@@ -52,22 +49,20 @@ class ScriptHandler
   // called when using this repository as a custom upstream, and
   // updating it with `terminus composer <site>.<env> update`. This
   // is not used in the GitHub PR workflow.
-  public static function prepareForPantheon()
-  {
+  public static function prepareForPantheon() {
     // Get rid of any .git directories that Composer may have added.
     // n.b. Ideally, there are none of these, as removing them may
     // impair Composer's ability to update them later. However, leaving
     // them in place prevents us from pushing to Pantheon.
     $dirsToDelete = [];
     $finder = new Finder();
-    foreach (
-      $finder
-        ->directories()
-        ->in(getcwd())
-        ->ignoreDotFiles(false)
-        ->ignoreVCS(false)
-        ->depth('> 0')
-        ->name('.git')
+    foreach ($finder
+      ->directories()
+      ->in(getcwd())
+      ->ignoreDotFiles(false)
+      ->ignoreVCS(false)
+      ->depth('> 0')
+      ->name('.git')
       as $dir) {
       $dirsToDelete[] = $dir;
     }
