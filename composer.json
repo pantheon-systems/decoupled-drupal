@@ -23,6 +23,11 @@
   ],
   "require": {
     "pantheon-upstreams/upstream-configuration": "*",
+    "composer/installers": "^1.9",
+    "drupal/core-composer-scaffold": "^9.2",
+    "drupal/core-recommended": "^9.2",
+    "pantheon-systems/drupal-integrations": "^9",
+    "cweagans/composer-patches": "^1.7",
     "drush/drush": "^10",
     "drupal/admin_toolbar": "^3.0",
     "drupal/coffee": "^1.2",
@@ -54,9 +59,6 @@
       "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
       "cp git-hooks/* .git/hooks",
       "chmod +x .git/hooks"
-    ],
-    "post-create-project-cmd": [
-      "terminus lando:setup"
     ]
   },
   "extra": {
