@@ -104,6 +104,9 @@
         "patches": {
             "drupal/core": {
                 "1356276#656: Allow profiles to define a base/parent profile": "https://www.drupal.org/files/issues/2021-06-29/D91x_AND_D93x-1356276-656.patch"
+            },
+            "drupal/decoupled_router": {
+                "3111456#34: Unable to resolve path on node in other language than default": "https://www.drupal.org/files/issues/2021-05-05/3111456-34.patch"
             }
         },
         "build-env": {

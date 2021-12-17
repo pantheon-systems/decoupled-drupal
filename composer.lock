@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "48cca34481462681e0f295100a1dbcf5",
+    "content-hash": "6f1615ae2a119ab6b935379dd8b48a77",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2057,7 +2057,7 @@
         },
         {
             "name": "drupal/decoupled_preview",
-            "version": "dev-db-1056",
+            "version": "dev-DB-1173",
             "dist": {
                 "type": "path",
                 "url": "web/modules/custom/decoupled_preview",
@@ -2599,7 +2599,7 @@
         },
         {
             "name": "drupal/pantheon_decoupled",
-            "version": "dev-db-1056",
+            "version": "dev-DB-1173",
             "dist": {
                 "type": "path",
                 "url": "web/modules/custom/pantheon_decoupled",
@@ -11562,5 +11562,5 @@
     "platform-overrides": {
         "php": "7.3"
     },
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.1.0"
 }
