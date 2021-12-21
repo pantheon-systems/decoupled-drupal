@@ -74,7 +74,7 @@ class DecoupledPreviewController extends ControllerBase {
     $sites = $storage->loadMultiple();
     $nodeData = $this->entityTypeManager()->getStorage('node')
       ->load($node);
-    $alias = $this->aliasManager->getAliasByPath('/node/' . $node);
+    $alias = $nodeData->toUrl('canonical', ['language' => $this->languageManager()->getCurrentLanguage()])->toString();
     $nodeType = $nodeData->bundle();
     $enablePreview = FALSE;
 
