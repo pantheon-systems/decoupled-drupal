@@ -5,6 +5,7 @@
  * Decoupled Preview module file.
  */
 
+use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Cache\Cache;
 
@@ -89,5 +90,20 @@ function decoupled_preview_preprocess_breadcrumb(&$variables) {
   $link = $variables['links'][2] ?? NULL;
   if ($link && isset($variables['breadcrumb'][2]) && $variables['links'][2]->getUrl()->getRouteName() === 'decoupled_preview.preview') {
     unset($variables['breadcrumb'][2]);
+  }
+}
+
+/**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function decoupled_preview_menu_local_tasks_alter(&$data, $route_name, RefinableCacheableDependencyInterface &$cacheability) {
+  if ($route_name === 'entity.node.canonical' && in_array('decoupled_preview.preview', array_keys($data['tabs'][0]))) {
+    $ids = \Drupal::entityQuery('dp_preview_site')->execute();
+    if (count($ids) == 1) {
+      /** @var \Drupal\Core\Url $url */
+      $url = $data['tabs'][0]['decoupled_preview.preview']['#link']['url'];
+      $url->setOption('attributes', ['target' => '_blank']);
+      $data['tabs'][0]['decoupled_preview.preview']['#link']['url'] = $url;
+    }
   }
 }

@@ -103,4 +103,12 @@ class DpPreviewSite extends ConfigEntityBase implements DpPreviewSiteInterface {
     }
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function delete() {
+    parent::delete();
+    \Drupal::service('router.builder')->setRebuildNeeded();
+  }
+
 }
