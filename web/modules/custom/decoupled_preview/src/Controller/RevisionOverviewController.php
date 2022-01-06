@@ -39,19 +39,24 @@ class RevisionOverviewController extends NodeController {
       foreach ($build['node_revisions_table']['#rows'] as $index => $row) {
         if (isset($row[1]) && in_array('data', array_keys($row[1])) && $row[1]['data']['#type'] === 'operations') {
           $links = $row[1]['data']['#links'];
+          $url = Url::fromRoute(
+            'decoupled_preview.preview',
+            [
+              'node' => $node->id(),
+              'node_preview' => $node->uuid(),
+            ],
+            [
+              'query' => [
+                "resourceVersionId" => $vIds[$index],
+              ],
+            ],
+          );
+          if (count($ids) == 1) {
+            $url->setOption('attributes', ['target' => '_blank']);
+          }
           $links['decoupled_preview'] = [
             'title' => $this->t('Decoupled Preview'),
-            'url' => Url::fromRoute(
-              'decoupled_preview.preview', [
-                'node' => $node->id(),
-                'node_preview' => $node->uuid(),
-              ],
-              [
-                'query' => [
-                  "resourceVersionId" => $vIds[$index],
-                ],
-              ],
-            ),
+            'url' => $url,
           ];
           $row[1]['data']['#links'] = $links;
           $build['node_revisions_table']['#rows'][$index] = $row;
