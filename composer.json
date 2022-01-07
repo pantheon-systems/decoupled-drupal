@@ -61,7 +61,6 @@
     "post-install-cmd": [
       "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
       "cp git-hooks/* .git/hooks",
-<<<<<<< HEAD
       "chmod +x .git/hooks",
       "@project-tasks"
     ],
@@ -70,9 +69,6 @@
     ],
     "post-create-project-cmd": [
       "@project-tasks"
-=======
-      "chmod +x .git/hooks"
->>>>>>> 7deb68bf (DB-1092: Dont exec local dev script on project create.)
     ]
   },
   "extra": {
