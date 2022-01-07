@@ -5,6 +5,7 @@
  * Decoupled Preview module file.
  */
 
+use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Cache\Cache;
 
@@ -38,6 +39,9 @@ function decoupled_preview_form_node_form_alter(&$form, &$form_state) {
         '_decoupled_preview_submit_decoupled_preview',
       ],
     ];
+    if (count($ids) == 1) {
+      $form['actions']['preview']['#attributes'] = ['onclick' => 'this.form.target="_blank";return true;'];
+    }
   }
 }
 
@@ -89,5 +93,41 @@ function decoupled_preview_preprocess_breadcrumb(&$variables) {
   $link = $variables['links'][2] ?? NULL;
   if ($link && isset($variables['breadcrumb'][2]) && $variables['links'][2]->getUrl()->getRouteName() === 'decoupled_preview.preview') {
     unset($variables['breadcrumb'][2]);
+  }
+}
+
+/**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function decoupled_preview_menu_local_tasks_alter(&$data, $route_name, RefinableCacheableDependencyInterface &$cacheability) {
+  switch ($route_name) {
+    case 'entity.node.edit_form':
+      if (in_array('decoupled_preview.preview', array_keys($data['tabs'][0]))) {
+        unset($data['tabs'][0]['decoupled_preview.preview']);
+      }
+      break;
+
+    case 'entity.node.canonical':
+      if (in_array('decoupled_preview.preview', array_keys($data['tabs'][0]))) {
+        $nodeType = \Drupal::routeMatch()->getParameter('node')->bundle();
+        $ids = \Drupal::entityQuery('dp_preview_site')->execute();
+        $previewSiteStorage = \Drupal::entityTypeManager()->getStorage('dp_preview_site');
+        $sites = $previewSiteStorage->loadMultiple($ids);
+        $enablePreview = FALSE;
+        $siteCount = 0;
+        foreach ($sites as $site) {
+          if ($site->checkEnabledContentType($nodeType)) {
+            $enablePreview = TRUE;
+            $siteCount++;
+          }
+        }
+        if ($enablePreview && $siteCount == 1) {
+          /** @var \Drupal\Core\Url $url */
+          $url = $data['tabs'][0]['decoupled_preview.preview']['#link']['url'];
+          $url->setOption('attributes', ['target' => '_blank']);
+          $data['tabs'][0]['decoupled_preview.preview']['#link']['url'] = $url;
+        }
+      }
+      break;
   }
 }

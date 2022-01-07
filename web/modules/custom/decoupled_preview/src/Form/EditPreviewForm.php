@@ -58,6 +58,7 @@ class EditPreviewForm extends FormBase {
       ->load($nid)
       ->bundle();
 
+    $siteCount = 0;
     foreach ($sites as $site) {
       if ($site->checkEnabledContentType($nodeType)) {
         $title = $site->label();
@@ -66,6 +67,7 @@ class EditPreviewForm extends FormBase {
 
         if ($uuid) {
           $options = [
+            'attributes' => ['target' => '_blank'],
             'query' => [
               'secret' => $secret,
               'slug' => $alias,
@@ -78,6 +80,7 @@ class EditPreviewForm extends FormBase {
         }
         else {
           $options = [
+            'attributes' => ['target' => '_blank'],
             'query' => [
               'secret' => $secret,
               'slug' => $alias,
@@ -85,10 +88,14 @@ class EditPreviewForm extends FormBase {
             ],
           ];
         }
-
         $url = Url::fromUri($url, $options)->toString();
         $view_mode_options[$url] = $title;
+        ++$siteCount;
       }
+    }
+    if ($siteCount == 1) {
+      $response = new RedirectResponse($url);
+      $response->send();
     }
     if (isset($view_mode_options)) {
       $form['preview_site'] = [
