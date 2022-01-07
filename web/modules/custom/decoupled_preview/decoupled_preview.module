@@ -100,24 +100,34 @@ function decoupled_preview_preprocess_breadcrumb(&$variables) {
  * Implements hook_menu_local_tasks_alter().
  */
 function decoupled_preview_menu_local_tasks_alter(&$data, $route_name, RefinableCacheableDependencyInterface &$cacheability) {
-  if ($route_name === 'entity.node.canonical' && in_array('decoupled_preview.preview', array_keys($data['tabs'][0]))) {
-    $nodeType = \Drupal::routeMatch()->getParameter('node')->bundle();
-    $ids = \Drupal::entityQuery('dp_preview_site')->execute();
-    $previewSiteStorage = \Drupal::entityTypeManager()->getStorage('dp_preview_site');
-    $sites = $previewSiteStorage->loadMultiple($ids);
-    $enablePreview = FALSE;
-    $siteCount = 0;
-    foreach ($sites as $site) {
-      if ($site->checkEnabledContentType($nodeType)) {
-        $enablePreview = TRUE;
-        $siteCount++;
+  switch ($route_name) {
+    case 'entity.node.edit_form':
+      if (in_array('decoupled_preview.preview', array_keys($data['tabs'][0]))) {
+        unset($data['tabs'][0]['decoupled_preview.preview']);
       }
-    }
-    if ($enablePreview && $siteCount == 1) {
-      /** @var \Drupal\Core\Url $url */
-      $url = $data['tabs'][0]['decoupled_preview.preview']['#link']['url'];
-      $url->setOption('attributes', ['target' => '_blank']);
-      $data['tabs'][0]['decoupled_preview.preview']['#link']['url'] = $url;
-    }
+      break;
+
+    case 'entity.node.canonical':
+      if (in_array('decoupled_preview.preview', array_keys($data['tabs'][0]))) {
+        $nodeType = \Drupal::routeMatch()->getParameter('node')->bundle();
+        $ids = \Drupal::entityQuery('dp_preview_site')->execute();
+        $previewSiteStorage = \Drupal::entityTypeManager()->getStorage('dp_preview_site');
+        $sites = $previewSiteStorage->loadMultiple($ids);
+        $enablePreview = FALSE;
+        $siteCount = 0;
+        foreach ($sites as $site) {
+          if ($site->checkEnabledContentType($nodeType)) {
+            $enablePreview = TRUE;
+            $siteCount++;
+          }
+        }
+        if ($enablePreview && $siteCount == 1) {
+          /** @var \Drupal\Core\Url $url */
+          $url = $data['tabs'][0]['decoupled_preview.preview']['#link']['url'];
+          $url->setOption('attributes', ['target' => '_blank']);
+          $data['tabs'][0]['decoupled_preview.preview']['#link']['url'] = $url;
+        }
+      }
+      break;
   }
 }
