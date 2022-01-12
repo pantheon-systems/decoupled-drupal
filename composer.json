@@ -64,10 +64,8 @@
       "chmod +x .git/hooks",
       "@project-tasks"
     ],
-    "post-update-cmd": [
-      "@project-tasks"
-    ],
     "post-create-project-cmd": [
+      "git init",
       "@project-tasks"
     ]
   },
