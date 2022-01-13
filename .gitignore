@@ -21,8 +21,6 @@
 
 # Ignore scaffold files
 .drush-lock-update
-.gitattributes
-pantheon.upstream.yml
 web/.eslintrc.json
 web/INSTALL.txt
 web/README.txt
@@ -32,7 +30,9 @@ web/.editorconfig
 web/.eslintignore
 web/.eslintrc
 web/.htaccess
+web/.gitignore
 web/.ht.router.php
+web/.gitattributes
 web/autoload.php
 web/index.php
 web/robots.txt
@@ -117,3 +117,6 @@ Thumbs.db
 
 # VS Code Settings
 .vscode/settings.json
+
+# Lando Template Files
+template.lando.yml
