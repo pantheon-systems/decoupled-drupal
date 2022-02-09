@@ -17,6 +17,7 @@ class DpPreviewSiteListBuilder extends ConfigEntityListBuilder {
     $header['label'] = $this->t('Label');
     $header['id'] = $this->t('Machine name');
     $header['status'] = $this->t('Status');
+    $header['preview_type'] = $this->t('Preview Type');
     return $header + parent::buildHeader();
   }
 
@@ -28,6 +29,7 @@ class DpPreviewSiteListBuilder extends ConfigEntityListBuilder {
     $row['label'] = $entity->label();
     $row['id'] = $entity->id();
     $row['status'] = $entity->status() ? $this->t('Enabled') : $this->t('Disabled');
+    $row['preview_type'] = $entity->get('preview_type');
     return $row + parent::buildRow($entity);
   }
 

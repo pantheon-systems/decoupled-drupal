@@ -39,9 +39,6 @@ function decoupled_preview_form_node_form_alter(&$form, &$form_state) {
         '_decoupled_preview_submit_decoupled_preview',
       ],
     ];
-    if (count($ids) == 1) {
-      $form['actions']['preview']['#attributes'] = ['onclick' => 'this.form.target="_blank";return true;'];
-    }
   }
 }
 
@@ -58,6 +55,9 @@ function _decoupled_preview_submit_decoupled_preview(array &$form, FormStateInte
   $entity->in_preview = TRUE;
   $uuid = $entity->uuid();
   $key = \Drupal::currentUser()->id() . '_' . $uuid;
+
+  // Set a state with route name, from where the Preview button is clicked.
+  \Drupal::state()->set('decoupled_preview_source_route', \Drupal::routeMatch()->getRouteName());
 
   // Service used to store uuid and respective form object in memory.
   $temp_store_private = \Drupal::service('tempstore.private');

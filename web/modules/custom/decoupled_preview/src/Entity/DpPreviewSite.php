@@ -45,6 +45,7 @@ use Drupal\decoupled_preview\DpPreviewSiteInterface;
  *     "url",
  *     "secret",
  *     "content_type",
+ *     "preview_type",
  *   }
  * )
  */

@@ -88,6 +88,17 @@ class DpPreviewSiteForm extends EntityForm {
       $form['secret']['#old-value'] = $this->entity->get('secret');
     }
 
+    $form['preview_type'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Preview Type'),
+      '#default_value' => $this->entity->get('preview_type'),
+      '#options' => [
+        'nextjs' => $this->t('Next.js'),
+      ],
+      '#description' => $this->t('Preview type for the frontend.'),
+      '#required' => TRUE,
+    ];
+
     $form['content_type'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Select Content Type'),
