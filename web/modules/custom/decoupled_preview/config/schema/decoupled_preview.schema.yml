@@ -15,5 +15,7 @@ decoupled_preview.dp_preview_site.*:
     secret:
       type: string
       exportable: false
+    preview_type:
+      type: string
     content_type:
       type: mapping
