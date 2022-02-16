@@ -1,4 +1,5 @@
 name: %SITE_NAME%
+id: %SITE_UUID%
 recipe: pantheon
 config:
   framework: drupal9
