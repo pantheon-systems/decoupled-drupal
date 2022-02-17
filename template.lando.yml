@@ -3,7 +3,6 @@ recipe: pantheon
 config:
   framework: drupal9
   site: %SITE_NAME%
-  id: %SITE_UUID%
   xdebug: false
 
 # events:
