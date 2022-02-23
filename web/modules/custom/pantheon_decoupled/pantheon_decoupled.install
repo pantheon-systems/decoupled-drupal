@@ -6,6 +6,7 @@
  */
 
 use Drupal\consumers\Entity\Consumer;
+use Drupal\decoupled_preview\Entity\DpPreviewSite;
 use Drupal\user\Entity\User;
 
 /**
@@ -44,10 +45,23 @@ function pantheon_decoupled_install() {
   $consumer->save();
   $client_id = $consumer->uuid();
 
+  // Create Preview Site configuration.
+  $shared_secret = \Drupal::service('password_generator')->generate(16);
+  $example_preview = DpPreviewSite::create([
+    'id' => 'example_nextjs_preview',
+    'label' => 'Example NextJS Preview',
+    'url' => 'https://example.site/api/preview',
+    'secret' => $shared_secret,
+    'content_type' => [ 'article' => 'article' ],
+    'preview_type'  => 'nextjs',
+  ]);
+  $example_preview->save();
+
   // Set messages for post installation steps.
   \Drupal::messenger()->addWarning(t('Pantheon Decoupled Post Installation Steps:'));
   \Drupal::messenger()->addWarning(t('1. Add the following to the .env file in your JavaScript application:'));
   \Drupal::messenger()->addWarning(t('CLIENT_ID=%client_id', ['%client_id' => $client_id]));
   \Drupal::messenger()->addWarning(t('CLIENT_SECRET=%client_secret', ['%client_secret' => $client_secret]));
+  \Drupal::messenger()->addWarning(t('PREVIEW_SECRET=%secret', ['%secret' => $shared_secret]));
   \Drupal::messenger()->addWarning(t('2. The user pantheon_decoupled was created with the password %password. Please update this account accordingly.', ['%password' => $password]));
 }
