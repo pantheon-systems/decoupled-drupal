@@ -45,13 +45,6 @@ function pantheon_decoupled_install() {
   $consumer->save();
   $client_id = $consumer->uuid();
 
-  // Set messages for post installation steps.
-  \Drupal::messenger()->addWarning(t('Pantheon Decoupled Post Installation Steps:'));
-  \Drupal::messenger()->addWarning(t('1. Add the following to the .env file in your JavaScript application:'));
-  \Drupal::messenger()->addWarning(t('CLIENT_ID=%client_id', ['%client_id' => $client_id]));
-  \Drupal::messenger()->addWarning(t('CLIENT_SECRET=%client_secret', ['%client_secret' => $client_secret]));
-  \Drupal::messenger()->addWarning(t('2. The user pantheon_decoupled was created with the password %password. Please update this account accordingly.', ['%password' => $password]));
-
   // Create Preview Site configuration.
   $shared_secret = \Drupal::service('password_generator')->generate(16);
   $example_preview = DpPreviewSite::create([
@@ -63,8 +56,12 @@ function pantheon_decoupled_install() {
     'preview_type'  => 'nextjs',
   ]);
   $example_preview->save();
-  \Drupal::messenger()->addWarning(t('Decoupled Preview Post Installation Steps:'));
-  \Drupal::messenger()->addWarning(t('The shared secret for decoupled preview is: %secret', ['%secret' => $shared_secret]));
-  \Drupal::messenger()->addWarning(t('Add the following to the .env file in your JavaScript application:'));
+
+  // Set messages for post installation steps.
+  \Drupal::messenger()->addWarning(t('Pantheon Decoupled Post Installation Steps:'));
+  \Drupal::messenger()->addWarning(t('1. Add the following to the .env file in your JavaScript application:'));
+  \Drupal::messenger()->addWarning(t('CLIENT_ID=%client_id', ['%client_id' => $client_id]));
+  \Drupal::messenger()->addWarning(t('CLIENT_SECRET=%client_secret', ['%client_secret' => $client_secret]));
   \Drupal::messenger()->addWarning(t('PREVIEW_SECRET=%secret', ['%secret' => $shared_secret]));
+  \Drupal::messenger()->addWarning(t('2. The user pantheon_decoupled was created with the password %password. Please update this account accordingly.', ['%password' => $password]));
 }
