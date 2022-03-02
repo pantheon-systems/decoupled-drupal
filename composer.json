@@ -32,6 +32,7 @@
         "drupal/decoupled_preview": "*",
         "drupal/environment_indicator": "^4.0",
         "drupal/gin": "^3.0@alpha",
+        "drupal/jsonapi_hypermedia": "^1.6",
         "drupal/pantheon_advanced_page_cache": "^1.2",
         "drupal/pantheon_decoupled": "*",
         "drupal/redis": "^1.5",
