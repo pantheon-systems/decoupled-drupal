@@ -10,7 +10,8 @@
   "require": {
     "drupal/default_content": "^2.0@alpha",
     "drupal/simple_oauth": "^5",
-    "drupal/jsonapi_menu_items": "^1.2"
+    "drupal/jsonapi_menu_items": "^1.2",
+    "drupal/jsonapi_hypermedia": "^1.6"
   },
   "homepage": "https://www.drupal.org/project/decoupled_preview",
   "authors": [
