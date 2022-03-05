@@ -8,3 +8,4 @@ dependencies:
   - simple_oauth:simple_oauth
   - decoupled_preview
   - jsonapi_menu_items:jsonapi_menu_items
+  - jsonapi_hypermedia:jsonapi_hypermedia
