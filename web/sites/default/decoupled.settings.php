@@ -140,3 +140,7 @@ if ($is_pantheon_prod_env) {
   $config['environment_indicator.indicator']['bg_color'] = '#aa3333';
 }
 
+/**
+ * Load services definition file specific to Decoupled.
+ */
+$settings['container_yamls'][] = __DIR__ . '/decoupled.services.yml';
