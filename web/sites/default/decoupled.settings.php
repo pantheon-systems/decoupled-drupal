@@ -123,6 +123,8 @@ $config['environment_indicator.indicator']['fg_color'] = '#ffffff';
 if ($is_local_env) {
   $config['environment_indicator.indicator']['name'] = 'Local';
   $config['environment_indicator.indicator']['bg_color'] = '#3363aa';
+  // Load services definition file specific to Decoupled.
+  $settings['container_yamls'][] = __DIR__ . '/cors.decoupled.services.yml';
 }
 
 if ($is_pantheon_dev_env){
@@ -140,7 +142,3 @@ if ($is_pantheon_prod_env) {
   $config['environment_indicator.indicator']['bg_color'] = '#aa3333';
 }
 
-/**
- * Load services definition file specific to Decoupled.
- */
-$settings['container_yamls'][] = __DIR__ . '/decoupled.services.yml';
