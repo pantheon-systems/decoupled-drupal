@@ -63,13 +63,15 @@
     "prepare-for-pantheon": "DrupalProject\\composer\\ScriptHandler::prepareForPantheon",
     "post-install-cmd": [
       "DrupalProject\\composer\\ScriptHandler::createRequiredFiles",
-      "cp git-hooks/* .git/hooks",
-      "chmod +x .git/hooks",
       "@project-tasks"
     ],
     "post-create-project-cmd": [
       "git init",
       "@project-tasks"
+    ],
+    "dev-tasks": [
+      "cp git-hooks/pre-commit .git/hooks",
+      "chmod +x .git/hooks/pre-commit"
     ]
   },
   "extra": {
