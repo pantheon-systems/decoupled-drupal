@@ -7,6 +7,32 @@ unlikely to adjust while building sites are not in the main branch of the
 repository. Instead, they are referenced as dependencies that are installed by
 Composer.
 
+## Manage secret for preview sites
+
+Install [terminus-secrets-plugin](https://github.com/pantheon-systems/terminus-secrets-plugin):
+
+```
+terminus self:plugin:install pantheon-systems/terminus-secrets-plugin
+terminus self:plugin:reload
+```
+After that use the following terminus commands to set a secret value in your pantheon site.
+
+To set a secret:
+```
+terminus secrets:set siteName.env preview.secret value
+```
+For example:
+```
+terminus secrets:set decoupled-drupal.dev preview.secret mySecret
+```
+
+The key name for the secret should be `preview.secret` as it overwrite the value for the preview site config entity in [decoupled.settings.php](web/sites/default/decoupled.settings.php)
+
+Get complete list of available commands for terminus-secrets-plugin:
+```
+terminus list secret
+```
+
 ## Contributing
 
 Contributions are welcome in the form of GitHub pull requests. However, the

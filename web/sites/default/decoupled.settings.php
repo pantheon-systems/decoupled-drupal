@@ -111,6 +111,14 @@ if (defined('PANTHEON_ENVIRONMENT')) {
   $settings['cache']['bins']['form'] = 'cache.backend.database'; // Use the database for forms */
 }
 
+/**
+ * Load the secrets set by terminus-secrets-plugin.
+ */
+if (file_exists('/files/private/secrets.json')) {
+  $secrets = json_decode(file_get_contents('/files/private/secrets.json'), true);
+  $config['decoupled_preview.secret'] = $secrets['preview.secret'];
+}
+
 
 /**
  * Environment Indicator settings.
@@ -141,4 +149,3 @@ if ($is_pantheon_prod_env) {
   $config['environment_indicator.indicator']['name'] = 'Live';
   $config['environment_indicator.indicator']['bg_color'] = '#aa3333';
 }
-
