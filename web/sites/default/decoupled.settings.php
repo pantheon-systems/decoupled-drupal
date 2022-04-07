@@ -113,10 +113,13 @@ if (defined('PANTHEON_ENVIRONMENT')) {
 
 /**
  * Load the secrets set by terminus-secrets-plugin.
+ *
+ * Any type of secrets can be loaded using the following code snippet
+ * in any of the settings.php files.
  */
 if (file_exists('/files/private/secrets.json')) {
   $secrets = json_decode(file_get_contents('/files/private/secrets.json'), true);
-  $config['decoupled_preview.secret'] = $secrets['preview.secret'];
+  $config['decoupled_preview.dp_preview_site.nextjs_demo']['secret']  = $secrets['preview.secret'];
 }
 
 
