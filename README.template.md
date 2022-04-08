@@ -61,7 +61,7 @@ After that use the following terminus commands to set a secret value in your pan
   terminus secrets:set decoupled-drupal.dev example_decoupled_preview.secret mySecret
   ```
 
-The key name for the secret should be `example_decoupled_preview.secret` as it overwrites the value for the preview site config entity in [decoupled.settings.php](web/sites/default/decoupled.settings.php)
+In this example, the key name for the secret is `example_decoupled_preview.secret`. If set, this value is used in [decoupled.settings.php](web/sites/default/decoupled.settings.php) to overwrite the related preview site entity. A similar approach could be used in other project settings files.
 
 Get complete list of available commands for terminus-secrets-plugin:
 ```

@@ -119,7 +119,7 @@ if (defined('PANTHEON_ENVIRONMENT')) {
  */
 if (file_exists('/files/private/secrets.json')) {
   $secrets = json_decode(file_get_contents('/files/private/secrets.json'), true);
-  $config['decoupled_preview.dp_preview_site.nextjs_demo']['secret']  = $secrets['preview.secret'];
+  $config['decoupled_preview.dp_preview_site.nextjs_demo']['secret']  = $secrets['example_decoupled_preview.secret'];
 }
 
 
