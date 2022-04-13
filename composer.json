@@ -2,7 +2,7 @@
   "name": "pantheon-systems/decoupled-drupal",
   "description": "Install Decoupled Drupal 9 with Composer on Pantheon.",
   "type": "project",
-  "license": "GPL-2.0-or-later",
+  "license": "GPL-2.0+",
   "repositories": [
     {
       "type": "composer",
