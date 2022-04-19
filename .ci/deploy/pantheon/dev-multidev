@@ -21,6 +21,8 @@ then
 else
   # Push to the dev environment
   terminus -n build:env:push "$TERMINUS_SITE.dev" --yes
+  # Also push to the default install profile environment
+  terminus -n build:env:push "$TERMINUS_SITE.default" --yes
 fi
 
 # Update the Drupal database
@@ -43,3 +45,14 @@ terminus -n secrets:set "$TERMINUS_SITE.$TERMINUS_ENV" token "$GITHUB_TOKEN" --f
 # Delete old multidev environments associated
 # with a PR that has been merged or closed.
 terminus -n build:env:delete:pr $TERMINUS_SITE --yes
+
+# If merging to default branch, also run deploy tasks on default multidev.
+if [[ $CI_BRANCH == $DEFAULT_BRANCH ]]
+then
+  # Update the Drupal database
+  terminus -n drush "$TERMINUS_SITE.default" -- updatedb -y
+  # Clear Drupal cache
+  terminus -n drush "$TERMINUS_SITE.default" -- cr
+  # Clear the environment cache
+  terminus -n env:clear-cache $TERMINUS_SITE.default
+fi
