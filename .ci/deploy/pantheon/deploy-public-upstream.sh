@@ -1,14 +1,14 @@
 #!/bin/bash
 # This script is pretty tailored to assuming it's running in the CircleCI environment / a fresh git clone.
-# It mirrors most commits from `pantheon-systems/drupal-recommended:release` to `pantheon-upstreams/drupal-recommended`.
+# It mirrors most commits from `pantheon-systems/decoupled-drupal:release` to `pantheon-systems/decoupled-drupal-recommended`.
 
 set -euo pipefail
 
 . .ci/deploy/pantheon/commit-type.sh
 
-# git remote add public "$UPSTREAM_REPO_REMOTE_URL"
-# git fetch public
-# git checkout "${CIRCLE_BRANCH}"
+git remote add public "$UPSTREAM_REPO_REMOTE_URL"
+git fetch public
+git checkout "${CIRCLE_BRANCH}"
 
 # List commits between release-pointer and HEAD, in reverse
 newcommits=$(git log release-pointer..HEAD --reverse --pretty=format:"%h")
@@ -38,10 +38,10 @@ fi
 git checkout -b public --track public/master
 git pull
 
-#if [[ "$CIRCLECI" != "" ]]; then
+if [[ "$CIRCLECI" != "" ]]; then
   git config --global user.email "bot@getpantheon.com"
   git config --global user.name "Pantheon Automation"
-#fi
+fi
 
 for commit in "${commits[@]}"; do
   if [[ -z "$commit" ]] ; then
@@ -56,17 +56,17 @@ done
 
 git commit -F /tmp/commit_message --author='Pantheon Automation <bot@getpantheon.com>'
 
-# # Push released commits to a few branches on the upstream repo.
-# # Since all commits to this repo are automated, it shouldn't hurt to put them on both branch names.
-# release_branches=('master' 'main')
-# for branch in "${release_branches[@]}"; do
-#   git push public public:"$branch"
-# done
+# Push released commits to a few branches on the upstream repo.
+# Since all commits to this repo are automated, it shouldn't hurt to put them on both branch names.
+release_branches=('master' 'main')
+for branch in "${release_branches[@]}"; do
+  git push public public:"$branch"
+done
 
-# git checkout $CIRCLE_BRANCH
+git checkout $CIRCLE_BRANCH
 
 # # update the release-pointer
 git tag -f -m 'Last commit set on upstream repo' release-pointer HEAD
 
-# # Push release-pointer
-# git push -f origin release-pointer
+# Push release-pointer
+git push -f origin release-pointer
