@@ -254,6 +254,9 @@ jobs:
   deploy-public-upstream:
     <<: *defaults
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "68:70:20:0f:b3:61:13:25:aa:45:db:07:c7:13:9a:fe"
       - checkout
       - run:
           name: Copy commits to destination repo
