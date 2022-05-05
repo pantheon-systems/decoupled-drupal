@@ -251,6 +251,13 @@ jobs:
   #     - run:
   #         name: run composer lock updater
   #         command: set -e && terminus project:clu $TERMINUS_SITE
+  deploy-public-upstream:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Copy commits to destination repo
+          command: .ci/deploy/pantheon/deploy-public-upstream.sh
 
 workflows:
   version: 2
@@ -263,6 +270,13 @@ workflows:
           requires:
             # - static_tests
             - build_php
+  deploy-public-upstream:
+    jobs:
+      - deploy-public-upstream:
+          filters:
+            branches:
+              only:
+                - release
       # - visual_regression_test:
       #     requires:
       #       - configure_env_vars
