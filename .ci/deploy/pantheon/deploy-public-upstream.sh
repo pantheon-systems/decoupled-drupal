@@ -6,6 +6,7 @@ set -euo pipefail
 
 . .ci/deploy/pantheon/commit-type.sh
 
+git remote add origin "$CIRCLE_REPOSITORY_URL"
 git remote add public "$UPSTREAM_REPO_REMOTE_URL"
 git fetch public
 git checkout "${CIRCLE_BRANCH}"
