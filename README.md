@@ -10,7 +10,7 @@ Composer.
 ## Contributing
 
 Contributions are welcome in the form of GitHub pull requests. However, the
-`pantheon-systems/decoupled-drupal` repository is a mirror that does not
+`pantheon-systems/decoupled-drupal-recommended` repository is a mirror that does not
 directly accept pull requests.
 
 Instead, to propose a change, please fork [pantheon-systems/decoupled-drupal](https://github.com/pantheon-systems/decoupled-drupal)
