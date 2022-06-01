@@ -43,7 +43,12 @@ lando pull --database=dev --files=dev --code=none
 ```
 
 ## Enabling Xdebug
-Xdebug can be used by making the following changes:
+The following lando commands can be used to toggle xdebug:
+ - `lando xdebug-on`: Enable xdebug.
+ - `lando xdebug-off`: Disable xdebug.
+
+Xdebug can also be enabled permanently by making the following changes:
+
 1. Edit `.lando.yml`:
    ```yaml
    config:
@@ -57,7 +62,9 @@ Xdebug can be used by making the following changes:
        config:
          php: .vscode/php.ini
    ```
-2. Rebuild your Lando instance by running `lando rebuild -y`
+2. Rebuild your Lando instances by running `lando rebuild -y` & install the site.
+
+The following changes are required to be done for the respective IDE:
 
 For PhpStorm:
 - On the PhpStorm toolbar, toggle ![debug icon](https://resources.jetbrains.com/help/img/idea/2022.1/php.icons.debug_listen_off_dark.svg) to start listening for incoming PHP debug connections, or choose **Run | Start Listening for PHP Debug Connections** from the main menu.
