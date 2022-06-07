@@ -25,6 +25,16 @@ function setup_lando() {
       terminus lando:setup
     echo "✅ Done!"
   fi
+  # Check for existing behat config files.
+    if [[
+        ( ! -f ".behat-lando.yml" )
+    ]] && [[
+                  ( ! -f ".lando.aliases.drushrc.php" )
+              ]]; then
+      echo "📂 💨  Generating .behat-lando.yml."
+        terminus lando:behat
+      echo "✅ Done!"
+    fi
 }
 
 project-tasks
