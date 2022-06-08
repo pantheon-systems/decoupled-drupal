@@ -14,7 +14,7 @@ function project-tasks() {
 
 
 #
-# Setup local devleopment environment.
+# Setup local development environment.
 #
 function setup_lando() {
   # Check for existing lando files.

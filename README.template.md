@@ -42,6 +42,10 @@ Sync dev environment database and files to local environment:
 lando pull --database=dev --files=dev --code=none
 ```
 
+## Run Behat locally
+- `lando behat`: Run behat test case.
+- For more info: https://docs.behat.org/en/v2.5/guides/6.cli.html
+
 ## Enabling Xdebug
 The following lando commands can be used to toggle xdebug:
  - `lando xdebug-on`: Enable xdebug.
