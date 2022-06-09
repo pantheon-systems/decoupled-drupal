@@ -9,7 +9,7 @@ default:
   extensions:
     Drupal\MinkExtension:
       goutte: ~
-      base_url: https://decoupled-drupal.lndo.site/
+      base_url: https://%SITE_NAME%.lndo.site/
     Drupal\DrupalExtension:
       blackbox: ~
       api_driver: 'drush'
