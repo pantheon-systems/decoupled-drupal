@@ -19,6 +19,7 @@
     "drupal/config_split": "^1.7",
     "drupal/core-composer-scaffold": "^9.2",
     "drupal/core-recommended": "^9.2",
+    "drupal/drupal-extension": "^4.2",
     "drupal/pantheon_decoupled_profile": "^1.0@alpha",
     "drupal/pantheon_decoupled_umami_demo": "^1.0@alpha",
     "drupal/redis": "^1.5",
