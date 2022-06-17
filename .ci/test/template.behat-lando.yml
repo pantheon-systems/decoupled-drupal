@@ -1,0 +1,17 @@
+default:
+  suites:
+    default:
+      contexts:
+        - Drupal\DrupalExtension\Context\DrushContext
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - PantheonSystems\CDNBehatHelpers\Contexts\FeatureContext
+  extensions:
+    Drupal\MinkExtension:
+      goutte: ~
+      base_url: https://%SITE_NAME%.lndo.site/
+    Drupal\DrupalExtension:
+      blackbox: ~
+      api_driver: 'drush'
+      drush:
+        alias: 'self'
