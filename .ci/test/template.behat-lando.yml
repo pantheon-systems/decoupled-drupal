@@ -2,16 +2,18 @@ default:
   suites:
     default:
       contexts:
-        - Drupal\DrupalExtension\Context\DrushContext
+        - FeatureContext
         - Drupal\DrupalExtension\Context\DrupalContext
         - Drupal\DrupalExtension\Context\MinkContext
-        - PantheonSystems\CDNBehatHelpers\Contexts\FeatureContext
+        - Drupal\DrupalExtension\Context\MessageContext
+        - Drupal\DrupalExtension\Context\DrushContext
+        - FailAid\Context\FailureContext
   extensions:
     Drupal\MinkExtension:
       goutte: ~
-      base_url: https://decoupled-drupal.lndo.site/
+      base_url: https://%SITE_NAME%.lndo.site/
     Drupal\DrupalExtension:
       blackbox: ~
       api_driver: 'drush'
       drush:
-        alias: 'self'
+        alias: 'lando.%SITE_NAME%'
