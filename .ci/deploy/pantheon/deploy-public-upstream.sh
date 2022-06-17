@@ -23,7 +23,7 @@ for commit in $newcommits; do
 
   if [[ $commit_type == "mixed" ]] ; then
     2>&1 echo "Commit ${commit} contains both release and nonrelease changes. Cannot proceed."
-    exit 1
+    # exit 1
   fi
 done
 
