@@ -27,11 +27,11 @@ function setup_lando() {
   fi
   # Check for existing behat config files.
     if [[
-                  ( ! -f "./drush/lando.aliases.drushrc.php" )
+        ( ! -f ".behat-lando.yml" )
     ]] && [[
-                  ( ! -f "./test/behat/behat-lando.yml" )
-    ]]; then
-      echo "📂 💨  Generating ./drush/lando.aliases.drushrc.php & ./test/behat/behat-lando.yml"
+                  ( ! -f ".lando.aliases.drushrc.php" )
+              ]]; then
+      echo "📂 💨  Generating .behat-lando.yml."
         terminus lando:behat
       echo "✅ Done!"
     fi
