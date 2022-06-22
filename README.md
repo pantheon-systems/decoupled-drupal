@@ -41,37 +41,7 @@ Composer.
 
 Note: This will result in a Github repository being created for this new codebase under the authenticated user's namespace (unless the --org option is used), a site being created on Pantheon and a CircleCI project being created for automated deployments.
 
-### Additional Options
-
-#### Installing with Umami Demo Data
-
-The installation command above will create a backend with limited example content. To instead create a site with Drupal's Umami demo data set, change the profile flag to:
-
-`--profile="pantheon_decoupled_umami_demo"`
-
-In your `terminus build:project:create` command.
-
-#### Using Other Git Hosts or CI Services
-
-Terminus build tools supports a number of other combinations of git hosts and CI services.
-
-For example, to use GitHub actions as your CI service, you could add the following additional flag to your `terminus build:project:create` command:
-
-`--ci=githubactions`
-
-Other possible values are `circleci`, `gitlab-pipelines` and `bitbucket-pipelines`.
-
-Note: if using Github Actions, your token should have the "workflow" scope.
-
-For more information, consult the [available services section of the build tools documentation](https://github.com/pantheon-systems/terminus-build-tools-plugin#available-services).
-
-#### Using a GitHub Organization
-
-`--org="{My Organization Name}"`
-
-If you would like the repo created to be under a GitHub organization instead of the authenticated user's namespace, you can use the `--org` option.
-
-For information on additional options, consult the [command options section of the build tools documentation](https://github.com/pantheon-systems/terminus-build-tools-plugin#command-options).
+[Additional Terminus Options](https://github.com/pantheon-systems/decoupled-kit-js/blob/canary/web/docs/Backend%20Starters/Decoupled%20Drupal/creating-new-project.md#additional-options)
 
 ## Contributing
 
