@@ -1,6 +1,9 @@
 default:
   suites:
     default:
+      paths:
+        - "%paths.base%/features"
+        - "%paths.base%/site-features"
       contexts:
         - Drupal\DrupalExtension\Context\DrushContext
         - Drupal\DrupalExtension\Context\DrupalContext
