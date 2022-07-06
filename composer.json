@@ -27,8 +27,7 @@
     "pantheon-upstreams/upstream-configuration": "*"
   },
   "require-dev": {
-    "drupal/drupal-extension": "^4.2",
-    "drush-ops/behat-drush-endpoint": "^9.4"
+    "drupal/drupal-extension": "^4.2"
   },
   "conflict": {
     "drupal/drupal": "*"
